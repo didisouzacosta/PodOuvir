@@ -15,7 +15,7 @@ struct AudioPlayerView: View {
     
     // MARK: - Public Variables
     
-    let media: AudioPlayer.Media
+    let media: any AudioPlayer.Media
     
     var body: some View {
         VStack {
