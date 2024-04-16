@@ -1,0 +1,11 @@
+//
+//  Release.xcconfig
+//  PodOuvir
+//
+//  Created by Adriano Souza Costa on 15/04/24.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+BACKEND_URL = https:/$()/podouvir.com.br/api
