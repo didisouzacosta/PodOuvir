@@ -74,11 +74,9 @@ struct AudioPlayerView: View {
     // MARK: - Private Methods
     
     private func prepareMedia() async throws {
-        try await audioPlayer.load(media: media)
-        
-        guard autoplay else { return }
         guard media.url != audioPlayer.currentItem?.url else { return }
-        
+        try await audioPlayer.load(media: media)
+        guard autoplay else { return }
         audioPlayer.play()
     }
 }
