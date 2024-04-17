@@ -25,6 +25,21 @@ struct AudioPlayerView: View {
             VStack(spacing: 16) {
                 Spacer()
                 
+                Rectangle()
+                    .overlay {
+                        AsyncImage(url: media.artworkUrl) { phase in
+                            phase.image?.resizable()
+                                .aspectRatio(contentMode: .fill)
+                        }
+                    }
+                    .foregroundStyle(.black)
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .frame(minHeight: 200, maxHeight: 400)
+                    .padding()
+                    .clipped()
+                
+                Spacer()
+                
                 VStack {
                     Text(media.title ?? "...")
                         .font(.title)
@@ -75,7 +90,8 @@ struct AudioPlayerView: View {
                             .font(.system(size: 32))
                     }
                 }
-            }.padding()
+            }
+            .padding(32)
         }.onAppear {
             Task {
                 do {
