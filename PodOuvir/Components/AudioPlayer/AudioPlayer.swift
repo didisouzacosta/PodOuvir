@@ -7,6 +7,7 @@
 
 import AVFoundation
 import MediaPlayer
+import SwiftUI
 
 @Observable
 final class AudioPlayer {
@@ -16,9 +17,9 @@ final class AudioPlayer {
     static let shared = AudioPlayer()
     
     private(set) var currentItem: Media?
-    private(set) var totalTime: TimeInterval = 0
+    private(set) var totalTime: Double = 0
     
-    private(set) var currentTime: TimeInterval = 0 {
+    var currentTime: Double = 0 {
         didSet { updateInfosCenter() }
     }
     

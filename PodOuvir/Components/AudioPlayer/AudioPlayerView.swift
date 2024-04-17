@@ -13,6 +13,8 @@ struct AudioPlayerView: View {
     
     private let audioPlayer = AudioPlayer.shared
     
+    @State private var currentTime: Double = 0
+    
     // MARK: - Public Variables
     
     let media: AudioPlayer.Media
@@ -31,10 +33,26 @@ struct AudioPlayerView: View {
                         .foregroundStyle(.gray)
                 }
                 
-                HStack {
-                    Text(audioPlayer.currentTime.minuteSecond)
-                    Spacer()
-                    Text(audioPlayer.totalTime.minuteSecond)
+                VStack {
+                    HStack {
+                        Text(audioPlayer.currentTime.minuteSecond)
+                        Spacer()
+                        Text(audioPlayer.totalTime.minuteSecond)
+                    }
+                    Slider(
+                        value: $currentTime,
+                        in: 0...audioPlayer.totalTime
+                    ) { isEditing in
+                        if isEditing {
+                            audioPlayer.stop()
+                        } else {
+                            audioPlayer.seek(to: currentTime)
+                            audioPlayer.play()
+                        }
+                    }
+                    .onChange(of: audioPlayer.currentTime) { _, newValue in
+                        currentTime = newValue
+                    }
                 }
                 
                 HStack(spacing: 16) {
@@ -44,14 +62,12 @@ struct AudioPlayerView: View {
                         Image(systemName: "gobackward.10")
                             .font(.system(size: 32))
                     }
-                    
                     Button {
                         audioPlayer.playPause()
                     } label: {
                         Image(systemName: audioPlayer.isPlaying ? "pause.circle.fill" : "play.circle.fill")
                             .font(.system(size: 62))
                     }
-                    
                     Button {
                         audioPlayer.forward()
                     } label: {
