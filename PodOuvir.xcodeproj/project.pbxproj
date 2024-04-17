@@ -555,7 +555,7 @@
 		D5C418AE2BCB188800E68671 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon Develop";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = PodOuvir/PodOuvir.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -760,7 +760,7 @@
 		D5C418CB2BCD172700E68671 /* Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon Staging";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = PodOuvir/PodOuvir.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
