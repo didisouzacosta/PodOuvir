@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		D56844802BCE7533005ED857 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = D568447F2BCE7533005ED857 /* Data.swift */; };
-		D585A3372BCEE5A600D1CDF9 /* MiniAudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D585A3362BCEE5A600D1CDF9 /* MiniAudioPlayerView.swift */; };
 		D589D8792BCD2D960072647A /* Podcasts.json in Resources */ = {isa = PBXBuildFile; fileRef = D589D8782BCD2D960072647A /* Podcasts.json */; };
 		D589D87C2BCD2E030072647A /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = D589D87B2BCD2E030072647A /* Item.swift */; };
 		D589D87F2BCD2E550072647A /* SectionItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = D589D87E2BCD2E550072647A /* SectionItems.swift */; };
@@ -46,7 +45,6 @@
 
 /* Begin PBXFileReference section */
 		D568447F2BCE7533005ED857 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
-		D585A3362BCEE5A600D1CDF9 /* MiniAudioPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniAudioPlayerView.swift; sourceTree = "<group>"; };
 		D589D8782BCD2D960072647A /* Podcasts.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Podcasts.json; sourceTree = "<group>"; };
 		D589D87B2BCD2E030072647A /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		D589D87E2BCD2E550072647A /* SectionItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionItems.swift; sourceTree = "<group>"; };
@@ -71,6 +69,7 @@
 		D5C418D12BCD176600E68671 /* Staging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
 		D5C418D22BCD1E6300E68671 /* Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
 		D5C418D82BCD23CA00E68671 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D5E873592BCF56A800F4432D /* PodOuvir.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PodOuvir.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +130,7 @@
 		D5C418892BCB188700E68671 /* PodOuvir */ = {
 			isa = PBXGroup;
 			children = (
+				D5E873592BCF56A800F4432D /* PodOuvir.entitlements */,
 				D589D87A2BCD2DF70072647A /* Models */,
 				D5C418D52BCD23B000E68671 /* Resources */,
 				D5C418CE2BCD173600E68671 /* Configurations */,
@@ -201,7 +201,6 @@
 			children = (
 				D5C418C12BCB1ED800E68671 /* AudioPlayer.swift */,
 				D5C418B92BCB1A2700E68671 /* AudioPlayerView.swift */,
-				D585A3362BCEE5A600D1CDF9 /* MiniAudioPlayerView.swift */,
 			);
 			path = AudioPlayer;
 			sourceTree = "<group>";
@@ -388,7 +387,6 @@
 				D5C418D32BCD1E6300E68671 /* Configurations.swift in Sources */,
 				D589D87C2BCD2E030072647A /* Item.swift in Sources */,
 				D5C418C02BCB1CE600E68671 /* PodcastStore.swift in Sources */,
-				D585A3372BCEE5A600D1CDF9 /* MiniAudioPlayerView.swift in Sources */,
 				D5C418C62BCBDDF000E68671 /* TimeIntervalExtension.swift in Sources */,
 				D5C418D92BCD23CA00E68671 /* AppDelegate.swift in Sources */,
 				D5C418B82BCB1A1800E68671 /* AudioListScreenView.swift in Sources */,
@@ -559,6 +557,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PodOuvir/PodOuvir.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -595,6 +594,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PodOuvir/PodOuvir.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -762,6 +762,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PodOuvir/PodOuvir.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;

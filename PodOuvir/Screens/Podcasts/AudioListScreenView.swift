@@ -17,7 +17,10 @@ struct AudioListScreenView: View {
                 ForEach(store.sections) { section in
                     Section("\(section.year.description)") {
                         ForEach(section.items) { item in
-                            NavigationLink(destination: AudioPlayerView(media: item)) {
+                            NavigationLink(destination: AudioPlayerView(
+                                media: item,
+                                autoplay: true
+                            )) {
                                 Text(item.title ?? "---")
                             }
                         }

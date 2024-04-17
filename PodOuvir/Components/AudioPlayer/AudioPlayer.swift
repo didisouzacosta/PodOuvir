@@ -15,7 +15,7 @@ final class AudioPlayer {
     
     static let shared = AudioPlayer()
     
-    private(set) var currentItem: (any Media)?
+    private(set) var currentItem: Media?
     private(set) var totalTime: TimeInterval = 0
     
     private(set) var currentTime: TimeInterval = 0 {
@@ -27,7 +27,7 @@ final class AudioPlayer {
     }
     
     var isPlaying: Bool {
-        state == .playing || state == .paused
+        state == .playing
     }
     
     // MARK: - Private Variables
@@ -64,6 +64,10 @@ final class AudioPlayer {
         setupRemoteTransportControls()
     }
     
+    func playPause() {
+        isPlaying ? pause() : play()
+    }
+    
     func play() {
         state = .loading
         player?.play()
@@ -94,14 +98,14 @@ final class AudioPlayer {
         currentTime = time.seconds
     }
     
-    func skipBackward() {
+    func backward() {
         guard let currentTime = player?.currentItem?.currentTime().seconds else { return }
         seek(to: max(0, currentTime - 10))
     }
     
-    func skipFoward() {
+    func forward() {
         guard let currentTime = player?.currentItem?.currentTime().seconds else { return }
-        seek(to: max(totalTime, currentTime + 10))
+        seek(to: max(0, currentTime + 10))
     }
     
     // MARK: - Private Methods
@@ -166,8 +170,10 @@ final class AudioPlayer {
             forInterval: interval,
             queue: .main
         ) { [weak self] time in
-            guard self?.player?.status == .readyToPlay else { return }
-            self?.state = .playing
+            if self?.state == .loading && self?.player?.status == .readyToPlay {
+                self?.state = .playing
+            }
+            
             self?.currentTime = time.seconds
         }
     }
@@ -202,7 +208,7 @@ extension AudioPlayer {
         case loading
     }
     
-    protocol Media: Equatable {
+    protocol Media {
         var url: URL { get }
         var title: String? { get }
         var artist: String? { get }

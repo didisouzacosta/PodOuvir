@@ -10,11 +10,11 @@ import Foundation
 extension TimeInterval {
     
     var hourMinuteSecond: String {
-        String(format:"%d:%02d:%02d", hour, minute, second)
+        String(format:"%02d:%02d:%02d", hour, minute, second)
     }
     
-    var minuteSecondMS: String {
-        String(format:"%d:%02d", minute, second)
+    var minuteSecond: String {
+        String(format:"%02d:%02d", minute, second)
     }
     
     var hour: Int {
