@@ -14,6 +14,7 @@ struct AudioPlayerView: View {
     private let audioPlayer = AudioPlayer.shared
     
     @State private var currentTime: Double = 0
+    @State private var isPlaying = false
     
     // MARK: - Public Variables
     
@@ -25,70 +26,35 @@ struct AudioPlayerView: View {
             VStack(spacing: 16) {
                 Spacer()
                 
-                Rectangle()
-                    .overlay {
-                        AsyncImage(url: media.artworkUrl) { phase in
-                            phase.image?.resizable()
-                                .aspectRatio(contentMode: .fill)
-                        }
-                    }
-                    .foregroundStyle(.black)
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
-                    .frame(minHeight: 200, maxHeight: 400)
-                    .padding()
-                    .clipped()
+                AudioPlayerCover(artworkUrl: media.artworkUrl)
                 
                 Spacer()
                 
-                VStack {
-                    Text(media.title ?? "...")
-                        .font(.title)
-                    Text(media.artist ?? "...")
-                        .font(.title3)
-                        .foregroundStyle(.gray)
+                AudioPlayerTitle(
+                    title: media.title,
+                    artist: media.artist
+                )
+                
+                AudioPlayerSeekBar(
+                    currentTime: $currentTime,
+                    totalTime: audioPlayer.totalTime
+                ) { time in
+                    audioPlayer.seek(to: time)
+                    audioPlayer.play()
+                } stopHandler: {
+                    audioPlayer.stop()
+                }.onChange(of: audioPlayer.currentTime) { _, newValue in
+                    currentTime = newValue
                 }
                 
-                VStack {
-                    HStack {
-                        Text(audioPlayer.currentTime.minuteSecond)
-                        Spacer()
-                        Text(audioPlayer.totalTime.minuteSecond)
-                    }
-                    Slider(
-                        value: $currentTime,
-                        in: 0...audioPlayer.totalTime
-                    ) { isEditing in
-                        if isEditing {
-                            audioPlayer.stop()
-                        } else {
-                            audioPlayer.seek(to: currentTime)
-                            audioPlayer.play()
-                        }
-                    }
-                    .onChange(of: audioPlayer.currentTime) { _, newValue in
-                        currentTime = newValue
-                    }
-                }
-                
-                HStack(spacing: 16) {
-                    Button {
-                        audioPlayer.backward()
-                    } label: {
-                        Image(systemName: "gobackward.10")
-                            .font(.system(size: 32))
-                    }
-                    Button {
-                        audioPlayer.playPause()
-                    } label: {
-                        Image(systemName: audioPlayer.isPlaying ? "pause.circle.fill" : "play.circle.fill")
-                            .font(.system(size: 62))
-                    }
-                    Button {
-                        audioPlayer.forward()
-                    } label: {
-                        Image(systemName: "goforward.10")
-                            .font(.system(size: 32))
-                    }
+                AudioPlayerControls(
+                    isPlaying: $isPlaying,
+                    playHandler: { audioPlayer.play() },
+                    pauseHandler: { audioPlayer.pause() },
+                    backwardHandler: { audioPlayer.backward() },
+                    forwardHandler: { audioPlayer.forward() }
+                ).onChange(of: audioPlayer.isPlaying) { _, newValue in
+                    self.isPlaying = newValue
                 }
             }
             .padding(32)
