@@ -37,6 +37,7 @@ struct AudioPlayerControls: View {
                     .font(.system(size: 32))
             }
         }
+        .padding()
     }
 }
 

@@ -12,11 +12,13 @@ struct PodOuvirApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     private let podcastStore = PodcastStore()
+    private let audioPlayer = AudioPlayer<Item>()
     
     var body: some Scene {
         WindowGroup {
             AudioListScreenView()
         }
         .environment(podcastStore)
+        .environment(audioPlayer)
     }
 }

@@ -53,9 +53,7 @@ final class AudioPlayer<T: Media> {
         }
         
         currentItem = media
-        
         currentTime = 0
-        
         totalTime = 0
         totalTime = try await playerItem.asset.load(.duration).seconds
         

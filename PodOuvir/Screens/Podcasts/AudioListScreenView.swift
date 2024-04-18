@@ -21,7 +21,7 @@ struct AudioListScreenView: View {
                         ForEach(section.items) { item in
                             NavigationLink {
                                 AudioPlayerView<Item>(
-                                    currentIndex: $currentIndex,
+                                    currentIndex: store.index(of: item),
                                     items: store.items,
                                     autoplay: false
                                 )
@@ -48,4 +48,5 @@ struct AudioListScreenView: View {
 #Preview {
     AudioListScreenView()
         .environment(PodcastStore())
+        .environment(AudioPlayer<Item>())
 }

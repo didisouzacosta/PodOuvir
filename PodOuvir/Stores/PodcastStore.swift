@@ -26,6 +26,10 @@ class PodcastStore {
     
     // MARK: - Public Methods
     
+    func index(of item: Item) -> Int {
+        items.firstIndex(of: item) ?? 0
+    }
+    
     func fetch() async throws {
         guard let url = Bundle.main.url(forResource: "Podcasts", withExtension: "json") else { return }
         
