@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Item: Decodable, Identifiable, AudioPlayer.Media {
+struct Item: Decodable, Identifiable, Hashable, Media {
     let id = UUID()
     let title: String?
     let artist: String?

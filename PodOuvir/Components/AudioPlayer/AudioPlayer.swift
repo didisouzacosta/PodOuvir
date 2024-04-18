@@ -10,13 +10,11 @@ import MediaPlayer
 import SwiftUI
 
 @Observable
-final class AudioPlayer {
+final class AudioPlayer<T: Media> {
     
     // MARK: - Pubic Variables
     
-    static let shared = AudioPlayer()
-    
-    private(set) var currentItem: Media?
+    private(set) var currentItem: T?
     private(set) var totalTime: Double = 0
     
     var currentTime: Double = 0 {
@@ -42,11 +40,7 @@ final class AudioPlayer {
     
     // MARK: - Public Methods
     
-    func load(audio: Audio) async throws {
-        try await load(media: audio)
-    }
-    
-    func load<T: Media>(media: T) async throws {
+    func load(media: T) async throws {
         try audioSession.setCategory(.playback)
         try audioSession.setActive(true)
         
@@ -59,6 +53,10 @@ final class AudioPlayer {
         }
         
         currentItem = media
+        
+        currentTime = 0
+        
+        totalTime = 0
         totalTime = try await playerItem.asset.load(.duration).seconds
         
         setupInfoCenter(with: media)
@@ -143,7 +141,7 @@ final class AudioPlayer {
         }
     }
     
-    private func setupInfoCenter<T: Media>(with media: T) {
+    private func setupInfoCenter(with media: T) {
         var infos = [String: Any]()
         infos[MPMediaItemPropertyTitle] = media.title
         infos[MPMediaItemPropertyArtist] = media.artist
@@ -207,20 +205,6 @@ extension AudioPlayer {
         case paused
         case stopped
         case loading
-    }
-    
-    protocol Media {
-        var url: URL { get }
-        var title: String? { get }
-        var artist: String? { get }
-        var artworkUrl: URL? { get }
-    }
-    
-    struct Audio: Media {
-        var url: URL
-        var title: String?
-        var artist: String?
-        var artworkUrl: URL?
     }
     
 }

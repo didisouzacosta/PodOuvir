@@ -14,9 +14,11 @@ struct AudioPlayerTitle: View {
     var body: some View {
         VStack {
             Text(title ?? "...")
-                .font(.title)
+                .font(.title2)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
             Text(artist ?? "...")
-                .font(.title3)
+                .font(.subheadline)
                 .foregroundStyle(.gray)
         }
     }

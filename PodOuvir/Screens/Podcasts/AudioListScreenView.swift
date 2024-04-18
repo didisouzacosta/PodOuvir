@@ -11,16 +11,21 @@ struct AudioListScreenView: View {
     
     @Environment(PodcastStore.self) private var store
     
+    @State private var currentIndex = 0
+    
     var body: some View {
         NavigationView {
             List {
                 ForEach(store.sections) { section in
                     Section("\(section.year.description)") {
                         ForEach(section.items) { item in
-                            NavigationLink(destination: AudioPlayerView(
-                                media: item,
-                                autoplay: true
-                            )) {
+                            NavigationLink {
+                                AudioPlayerView<Item>(
+                                    currentIndex: $currentIndex,
+                                    items: store.items,
+                                    autoplay: false
+                                )
+                            } label: {
                                 Text(item.title ?? "---")
                             }
                         }

@@ -7,33 +7,46 @@
 
 import SwiftUI
 
-struct AudioPlayerView: View {
+struct AudioPlayerView<T: Media>: View {
     
     // MARK: - Private Variables
     
-    private let audioPlayer = AudioPlayer.shared
+    private let audioPlayer = AudioPlayer<T>()
     
     @State private var currentTime: Double = 0
     @State private var isPlaying = false
+    @State private var selectedItem: URL?
+    
+    private var currentMedia: T {
+        items[currentIndex]
+    }
+    
+    private var artworks: [URL] {
+        items.compactMap { $0.artworkUrl }
+    }
     
     // MARK: - Public Variables
     
-    let media: AudioPlayer.Media
+    @Binding var currentIndex: Int
+    
+    let items: [T]
     let autoplay: Bool
     
     var body: some View {
-        ZStack {
+        VStack {
+            Spacer()
+            AudioPlayerCover(
+                artworks: artworks,
+                selectedItem: $selectedItem,
+                currentIndex: $currentIndex
+            )
+            
             VStack(spacing: 16) {
-                Spacer()
-                
-                AudioPlayerCover(artworkUrl: media.artworkUrl)
-                
-                Spacer()
-                
                 AudioPlayerTitle(
-                    title: media.title,
-                    artist: media.artist
+                    title: currentMedia.title,
+                    artist: currentMedia.artist
                 )
+                .frame(height: 80)
                 
                 AudioPlayerSeekBar(
                     currentTime: $currentTime,
@@ -57,13 +70,10 @@ struct AudioPlayerView: View {
                     self.isPlaying = newValue
                 }
             }
-            .padding(32)
-        }.onAppear {
-            Task {
-                do {
-                    try await prepareMedia()
-                } catch {
-                    print(error.localizedDescription)
+            .padding()
+            .onChange(of: currentMedia, initial: true) { _, newValue in
+                Task {
+                    try? await prepare(media: newValue)
                 }
             }
         }
@@ -71,17 +81,35 @@ struct AudioPlayerView: View {
     
     // MARK: - Private Methods
     
-    private func prepareMedia() async throws {
-        guard media.url != audioPlayer.currentItem?.url else { return }
+    private func prepare(media: T) async throws {
+        guard media != audioPlayer.currentItem else { return }
+        
         try await audioPlayer.load(media: media)
+        
         guard autoplay else { return }
+        
         audioPlayer.play()
     }
 }
 
 #Preview {
-    AudioPlayerView(
-        media: fakePodcast,
-        autoplay: false
-    )
+    struct Example: View {
+        @State var currentIndex = 0
+        
+        @State var items: [Item] = [
+            zeldaTOTKSample,
+            donkeyKongSample,
+            alanWakeSample
+        ]
+        
+        var body: some View {
+            AudioPlayerView<Item>(
+                currentIndex: $currentIndex,
+                items: items,
+                autoplay: false
+            )
+        }
+    }
+    
+    return Example()
 }

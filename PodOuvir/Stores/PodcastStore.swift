@@ -13,9 +13,11 @@ class PodcastStore {
     // MARK: - Public Variables
     
     var sections: [SectionItems] {
-        get {
-            _sections.sorted(by: { $0.year > $1.year })
-        }
+        _sections.sorted(by: { $0.year > $1.year })
+    }
+    
+    var items: [Item] {
+        sections.flatMap { $0.items }
     }
     
     // MARK: - Private Variables
