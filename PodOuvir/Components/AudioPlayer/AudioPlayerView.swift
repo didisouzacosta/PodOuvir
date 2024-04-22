@@ -9,12 +9,19 @@ import SwiftUI
 
 struct AudioPlayerView<T: Media>: View {
     
-    // MARK: - Private Variables
+    // MARK: - Public Variables
     
-    private let audioPlayer = AudioPlayer<T>()
+    @State var items: [T]
+    @State var selected: T?
+    
+    var autoplay: Bool
+    
+    // MARK: - Private Variables
     
     @State private var currentTime: Double = 0
     @State private var isPlaying = false
+    
+    private let audioPlayer = AudioPlayer<T>()
     
     private var currentItem: T {
         selected ?? items[0]
@@ -40,12 +47,7 @@ struct AudioPlayerView<T: Media>: View {
         nextItem != nil
     }
     
-    // MARK: - Public Variables
-    
-    @State var items: [T]
-    @State var selected: T?
-    
-    let autoplay: Bool
+    // MARK: - Life Cicle
     
     var body: some View {
         VStack(spacing: 16) {
@@ -78,34 +80,32 @@ struct AudioPlayerView<T: Media>: View {
                 }
                 
                 AudioPlayerControls(
-                    isPlaying: $isPlaying,
+                    isPlaying: isPlaying,
                     hasPrevious: hasPrevious,
                     hasNext: hasNext,
                     playHandler: audioPlayer.play,
                     pauseHandler: audioPlayer.pause,
                     nextHandler: next,
                     previousHandler: previous
-                ).onChange(of: audioPlayer.isPlaying, initial: true) { _, newValue in
-                    isPlaying = newValue
-                }
-//                }.onChange(of: audioPlayer.currentItem) { _, newValue in
-//                    selected = newValue
-//                }
+                )
             }
             .padding(.horizontal, 32)
+            .onChange(of: audioPlayer.isPlaying, initial: true) { _, newValue in
+                isPlaying = newValue
+            }
             .onChange(of: currentItem, initial: true) { _, newValue in
                 Task {
                     try? await prepare(media: newValue)
+                    guard autoplay else { return }
+                    audioPlayer.play()
                 }
             }
-        }.onAppear {
-            setupAudioPlayer()
         }
     }
     
     // MARK: - Private Methods
     
-    private func setupAudioPlayer() {
+    private func setupAudioPlayer() async throws {
         audioPlayer.hasPrevious = hasPrevious
         audioPlayer.hasNext = hasNext
         audioPlayer.previousHandler = previous
@@ -113,23 +113,22 @@ struct AudioPlayerView<T: Media>: View {
     }
     
     private func prepare(media: T) async throws {
-//        guard media != audioPlayer.currentItem else { return }
-//        
-//        try await audioPlayer.load(media: media)
-//        
-//        guard autoplay else { return }
-//        
-//        audioPlayer.play()
+        guard media != audioPlayer.currentItem else { return }
+        try await audioPlayer.load(media: media)
     }
     
     private func previous() {
-        guard let previousItem else { return }
-        selected = previousItem
+        withAnimation {
+            guard let previousItem else { return }
+            selected = previousItem
+        }
     }
     
     private func next() {
-        guard let nextItem else { return }
-        selected = nextItem
+        withAnimation {
+            guard let nextItem else { return }
+            selected = nextItem
+        }
     }
     
 }

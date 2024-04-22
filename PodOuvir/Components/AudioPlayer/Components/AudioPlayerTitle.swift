@@ -16,13 +16,16 @@ struct AudioPlayerTitle: View {
         VStack {
             Text(episode)
                 .font(.caption)
+                .contentTransition(.numericText())
             Text(title)
                 .font(.title2)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
+                .contentTransition(.numericText())
             Text(artist ?? "...")
                 .font(.subheadline)
                 .foregroundStyle(.gray)
+                .contentTransition(.numericText())
         }
     }
 }

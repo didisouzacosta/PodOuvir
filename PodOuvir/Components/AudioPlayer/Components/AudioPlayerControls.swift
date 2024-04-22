@@ -11,8 +11,7 @@ struct AudioPlayerControls: View {
     
     typealias Handler = () -> Void
     
-    @Binding var isPlaying: Bool
-    
+    var isPlaying = false
     var hasPrevious = false
     var hasNext = false
     
@@ -32,7 +31,6 @@ struct AudioPlayerControls: View {
             
             Button {
                 isPlaying ? pauseHandler() : playHandler()
-                isPlaying.toggle()
             } label: {
                 Image(systemName: isPlaying ? "pause.circle.fill" : "play.circle.fill")
                     .font(.system(size: 62))
@@ -57,7 +55,7 @@ struct AudioPlayerControls: View {
         
         var body: some View {
             AudioPlayerControls(
-                isPlaying: $isPlaying,
+                isPlaying: isPlaying,
                 hasPrevious: hasPrevious,
                 hasNext: hasNext,
                 playHandler: {},

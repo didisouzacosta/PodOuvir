@@ -23,7 +23,7 @@ struct AudioListScreenView: View {
                                 AudioPlayerView<Episode>(
                                     items: store.episodes,
                                     selected: episode,
-                                    autoplay: false
+                                    autoplay: true
                                 )
                             } label: {
                                 Text(episode.title)

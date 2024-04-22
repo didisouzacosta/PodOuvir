@@ -48,8 +48,9 @@ final class AudioPlayer<T: Media> {
     // MARK: - Public Methods
     
     func load(media: T) async throws {
-        try audioSession.setCategory(.playback)
-        try audioSession.setActive(true)
+        try await setupSession()
+        
+        stop()
         
         let playerItem = AVPlayerItem(url: media.url)
         
@@ -59,13 +60,10 @@ final class AudioPlayer<T: Media> {
             player = AVPlayer(playerItem: playerItem)
         }
         
-        currentItem = media
-        currentTime = 0
         totalTime = 0
         totalTime = try await playerItem.asset.load(.duration).seconds
         
         setupInfoCenter(with: media)
-        setupRemoteTransportControls()
     }
     
     func playPause() {
@@ -113,6 +111,11 @@ final class AudioPlayer<T: Media> {
     }
     
     // MARK: - Private Methods
+    
+    private func setupSession() async throws {
+        try audioSession.setCategory(.playback)
+        try audioSession.setActive(true)
+    }
     
     private func setupRemoteTransportControls() {
         remoteCommand.playCommand.addTarget { [weak self] _ in
