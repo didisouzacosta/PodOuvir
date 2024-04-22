@@ -8,21 +8,28 @@
 import SwiftUI
 
 struct AudioPlayerControls: View {
+    
+    typealias Handler = () -> Void
+    
     @Binding var isPlaying: Bool
     
-    let playHandler: () -> Void
-    let pauseHandler: () -> Void
-    let backwardHandler: () -> Void
-    let forwardHandler: () -> Void
+    var hasPrevious = false
+    var hasNext = false
+    
+    let playHandler: Handler
+    let pauseHandler: Handler
+    let nextHandler: Handler?
+    let previousHandler: Handler?
     
     var body: some View {
         HStack(spacing: 16) {
             Button {
-                backwardHandler()
+                previousHandler?()
             } label: {
-                Image(systemName: "gobackward.10")
-                    .font(.system(size: 32))
-            }
+                Image(systemName: "backward.fill")
+                    .font(.system(size: 30))
+            }.disabled(!hasPrevious)
+            
             Button {
                 isPlaying ? pauseHandler() : playHandler()
                 isPlaying.toggle()
@@ -30,12 +37,13 @@ struct AudioPlayerControls: View {
                 Image(systemName: isPlaying ? "pause.circle.fill" : "play.circle.fill")
                     .font(.system(size: 62))
             }
+            
             Button {
-                forwardHandler()
+                nextHandler?()
             } label: {
-                Image(systemName: "goforward.10")
-                    .font(.system(size: 32))
-            }
+                Image(systemName: "forward.fill")
+                    .font(.system(size: 30))
+            }.disabled(!hasNext)
         }
         .padding()
     }
@@ -44,14 +52,18 @@ struct AudioPlayerControls: View {
 #Preview {
     struct Example: View {
         @State var isPlaying = false
+        @State var hasPrevious = false
+        @State var hasNext = true
         
         var body: some View {
             AudioPlayerControls(
                 isPlaying: $isPlaying,
+                hasPrevious: hasPrevious,
+                hasNext: hasNext,
                 playHandler: {},
                 pauseHandler: {},
-                backwardHandler: {},
-                forwardHandler: {}
+                nextHandler: {},
+                previousHandler: {}
             )
         }
     }

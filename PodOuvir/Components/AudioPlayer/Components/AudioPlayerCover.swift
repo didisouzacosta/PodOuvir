@@ -26,7 +26,7 @@ struct AudioPlayerCover<T: Media>: View {
         ) { index, item in
             Rectangle()
                 .overlay {
-                    AsyncImage(url: item.artworkUrl) { image in
+                    AsyncImage(url: item.artworkURL) { image in
                         image.resizable()
                             .aspectRatio(contentMode: .fill)
                     } placeholder: {
@@ -43,21 +43,15 @@ struct AudioPlayerCover<T: Media>: View {
 #Preview {
     struct Example:View {
         @State private var currentIndex = 0
-        @State private var selectedItem: Item?
-        @State private var artworks = [Item]()
+        @State private var selectedItem: Episode?
+        @State private var artworks = episodes
         
         var body: some View {
-            AudioPlayerCover<Item>(
+            AudioPlayerCover<Episode>(
                 items: $artworks,
                 selection: $selectedItem,
                 currentIndex: $currentIndex
-            ).onAppear {
-                artworks = [
-                    alanWakeSample,
-                    donkeyKongSample,
-                    zeldaTOTKSample
-                ]
-            }
+            )
         }
     }
     

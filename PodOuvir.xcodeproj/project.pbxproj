@@ -16,8 +16,7 @@
 		D56484742BD14D53007D0296 /* SafeArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56484732BD14D53007D0296 /* SafeArray.swift */; };
 		D56844802BCE7533005ED857 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = D568447F2BCE7533005ED857 /* Data.swift */; };
 		D589D8792BCD2D960072647A /* Podcasts.json in Resources */ = {isa = PBXBuildFile; fileRef = D589D8782BCD2D960072647A /* Podcasts.json */; };
-		D589D87C2BCD2E030072647A /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = D589D87B2BCD2E030072647A /* Item.swift */; };
-		D589D87F2BCD2E550072647A /* SectionItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = D589D87E2BCD2E550072647A /* SectionItems.swift */; };
+		D589D87C2BCD2E030072647A /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D589D87B2BCD2E030072647A /* Episode.swift */; };
 		D5C4188B2BCB188700E68671 /* PodOuvirApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C4188A2BCB188700E68671 /* PodOuvirApp.swift */; };
 		D5C418912BCB188800E68671 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5C418902BCB188800E68671 /* Assets.xcassets */; };
 		D5C418942BCB188800E68671 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5C418932BCB188800E68671 /* Preview Assets.xcassets */; };
@@ -31,6 +30,7 @@
 		D5C418C62BCBDDF000E68671 /* TimeIntervalExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C418C52BCBDDF000E68671 /* TimeIntervalExtension.swift */; };
 		D5C418D32BCD1E6300E68671 /* Configurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C418D22BCD1E6300E68671 /* Configurations.swift */; };
 		D5C418D92BCD23CA00E68671 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C418D82BCD23CA00E68671 /* AppDelegate.swift */; };
+		D5ECE4932BD3129300EB6BC0 /* ProdCast.json in Resources */ = {isa = PBXBuildFile; fileRef = D5ECE4922BD3129300EB6BC0 /* ProdCast.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,8 +59,7 @@
 		D56484732BD14D53007D0296 /* SafeArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeArray.swift; sourceTree = "<group>"; };
 		D568447F2BCE7533005ED857 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		D589D8782BCD2D960072647A /* Podcasts.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Podcasts.json; sourceTree = "<group>"; };
-		D589D87B2BCD2E030072647A /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
-		D589D87E2BCD2E550072647A /* SectionItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionItems.swift; sourceTree = "<group>"; };
+		D589D87B2BCD2E030072647A /* Episode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
 		D58FE7E02BD2975B00F2EE83 /* PodOuvirStaging.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PodOuvirStaging.entitlements; sourceTree = "<group>"; };
 		D5C418872BCB188700E68671 /* PodOuvir.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PodOuvir.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5C4188A2BCB188700E68671 /* PodOuvirApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodOuvirApp.swift; sourceTree = "<group>"; };
@@ -84,6 +83,7 @@
 		D5C418D22BCD1E6300E68671 /* Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
 		D5C418D82BCD23CA00E68671 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D5E873592BCF56A800F4432D /* PodOuvir.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PodOuvir.entitlements; sourceTree = "<group>"; };
+		D5ECE4922BD3129300EB6BC0 /* ProdCast.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ProdCast.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,8 +134,7 @@
 		D589D87A2BCD2DF70072647A /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				D589D87E2BCD2E550072647A /* SectionItems.swift */,
-				D589D87B2BCD2E030072647A /* Item.swift */,
+				D589D87B2BCD2E030072647A /* Episode.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -281,6 +280,7 @@
 		D5C418D52BCD23B000E68671 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D5ECE4922BD3129300EB6BC0 /* ProdCast.json */,
 				D589D8782BCD2D960072647A /* Podcasts.json */,
 				D568447F2BCE7533005ED857 /* Data.swift */,
 			);
@@ -398,6 +398,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D5C418942BCB188800E68671 /* Preview Assets.xcassets in Resources */,
+				D5ECE4932BD3129300EB6BC0 /* ProdCast.json in Resources */,
 				D5C418912BCB188800E68671 /* Assets.xcassets in Resources */,
 				D589D8792BCD2D960072647A /* Podcasts.json in Resources */,
 			);
@@ -426,7 +427,7 @@
 			files = (
 				D5C418D32BCD1E6300E68671 /* Configurations.swift in Sources */,
 				D52BDC8B2BD1087F005C5599 /* AudioPlayerCover.swift in Sources */,
-				D589D87C2BCD2E030072647A /* Item.swift in Sources */,
+				D589D87C2BCD2E030072647A /* Episode.swift in Sources */,
 				D52BDC892BD1072B005C5599 /* AudioPlayerTitle.swift in Sources */,
 				D5C418C02BCB1CE600E68671 /* PodcastStore.swift in Sources */,
 				D5C418C62BCBDDF000E68671 /* TimeIntervalExtension.swift in Sources */,
@@ -440,7 +441,6 @@
 				D54AA71B2BD16F4A00435FC5 /* Media.swift in Sources */,
 				D52BDC872BD0FF66005C5599 /* AudioPlayerControls.swift in Sources */,
 				D5C4188B2BCB188700E68671 /* PodOuvirApp.swift in Sources */,
-				D589D87F2BCD2E550072647A /* SectionItems.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

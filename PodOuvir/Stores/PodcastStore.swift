@@ -12,22 +12,22 @@ class PodcastStore {
     
     // MARK: - Public Variables
     
-    var sections: [SectionItems] {
+    var sections: [EpisodesSection] {
         _sections.sorted(by: { $0.year > $1.year })
     }
     
-    var items: [Item] {
-        sections.flatMap { $0.items }
+    var episodes: [Episode] {
+        sections.flatMap { $0.episodes }
     }
     
     // MARK: - Private Variables
     
-    private var _sections: [SectionItems] = []
+    private var _sections: [EpisodesSection] = []
     
     // MARK: - Public Methods
     
-    func index(of item: Item) -> Int {
-        items.firstIndex(of: item) ?? 0
+    func index(of item: Episode) -> Int {
+        episodes.firstIndex(of: item) ?? 0
     }
     
     func fetch() async throws {
@@ -36,7 +36,7 @@ class PodcastStore {
         let data = try Data(contentsOf: url)
         let decoder = JSONDecoder()
         
-        self._sections = try decoder.decode([SectionItems].self, from: data)
+        self._sections = try decoder.decode([EpisodesSection].self, from: data)
     }
     
 }

@@ -12,7 +12,14 @@ import SwiftUI
 @Observable
 final class AudioPlayer<T: Media> {
     
+    typealias Handler = () -> Void
+    
     // MARK: - Pubic Variables
+    
+    var hasPrevious = false
+    var hasNext = false
+    var previousHandler: Handler?
+    var nextHandler: Handler?
     
     private(set) var currentItem: T?
     private(set) var totalTime: Double = 0
@@ -130,13 +137,18 @@ final class AudioPlayer<T: Media> {
             return .success
         }
         
-        remoteCommand.nextTrackCommand.addTarget { [weak self] _ in
+        remoteCommand.previousTrackCommand.isEnabled = hasPrevious
+        remoteCommand.previousTrackCommand.addTarget { [weak self] _ in
+            self?.previousHandler?()
             return .success
         }
         
-        remoteCommand.previousTrackCommand.addTarget { [weak self] _ in
+        remoteCommand.nextTrackCommand.isEnabled = hasNext
+        remoteCommand.nextTrackCommand.addTarget { [weak self] _ in
+            self?.nextHandler?()
             return .success
         }
+
     }
     
     private func setupInfoCenter(with media: T) {
@@ -145,7 +157,7 @@ final class AudioPlayer<T: Media> {
         infos[MPMediaItemPropertyArtist] = media.artist
         infos[MPMediaItemPropertyPlaybackDuration] = totalTime
         
-        if let artworkUrl = media.artworkUrl {
+        if let artworkUrl = media.artworkURL {
             Task { try await loadArworkImage(from: artworkUrl) }
         }
         

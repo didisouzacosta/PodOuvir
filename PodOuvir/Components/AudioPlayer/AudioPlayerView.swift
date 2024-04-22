@@ -9,22 +9,41 @@ import SwiftUI
 
 struct AudioPlayerView<T: Media>: View {
     
-    @Environment(AudioPlayer<T>.self) var audioPlayer
-    
     // MARK: - Private Variables
+    
+    private let audioPlayer = AudioPlayer<T>()
     
     @State private var currentTime: Double = 0
     @State private var isPlaying = false
-    @State private var selection: T?
     
     private var currentItem: T {
-        items[currentIndex]
+        selected ?? items[0]
+    }
+    
+    private var currentIndex: Int {
+        items.firstIndex(of: currentItem) ?? 0
+    }
+    
+    private var previousItem: T? {
+        items[safe: currentIndex - 1]
+    }
+    
+    private var nextItem: T? {
+        items[safe: currentIndex + 1]
+    }
+    
+    private var hasPrevious: Bool {
+        previousItem != nil
+    }
+    
+    private var hasNext: Bool {
+        nextItem != nil
     }
     
     // MARK: - Public Variables
     
-    @State var currentIndex = 0
     @State var items: [T]
+    @State var selected: T?
     
     let autoplay: Bool
     
@@ -32,14 +51,15 @@ struct AudioPlayerView<T: Media>: View {
         VStack(spacing: 16) {
             Spacer()
             
-            AudioPlayerCover<T>(
-                items: $items,
-                selection: $selection,
-                currentIndex: $currentIndex
-            )
+//            AudioPlayerCover<T>(
+//                items: $items,
+//                selection: $selection,
+//                currentIndex: $currentIndex
+//            )
             
             VStack(spacing: 16) {
                 AudioPlayerTitle(
+                    episode: currentItem.episode,
                     title: currentItem.title,
                     artist: currentItem.artist
                 )
@@ -59,15 +79,18 @@ struct AudioPlayerView<T: Media>: View {
                 
                 AudioPlayerControls(
                     isPlaying: $isPlaying,
-                    playHandler: { audioPlayer.play() },
-                    pauseHandler: { audioPlayer.pause() },
-                    backwardHandler: { audioPlayer.backward() },
-                    forwardHandler: { audioPlayer.forward() }
+                    hasPrevious: hasPrevious,
+                    hasNext: hasNext,
+                    playHandler: audioPlayer.play,
+                    pauseHandler: audioPlayer.pause,
+                    nextHandler: next,
+                    previousHandler: previous
                 ).onChange(of: audioPlayer.isPlaying, initial: true) { _, newValue in
                     isPlaying = newValue
-                }.onChange(of: audioPlayer.currentItem) { _, newValue in
-                    selection = newValue
                 }
+//                }.onChange(of: audioPlayer.currentItem) { _, newValue in
+//                    selected = newValue
+//                }
             }
             .padding(.horizontal, 32)
             .onChange(of: currentItem, initial: true) { _, newValue in
@@ -75,38 +98,54 @@ struct AudioPlayerView<T: Media>: View {
                     try? await prepare(media: newValue)
                 }
             }
+        }.onAppear {
+            setupAudioPlayer()
         }
     }
     
     // MARK: - Private Methods
     
-    private func prepare(media: T) async throws {
-        guard media != audioPlayer.currentItem else { return }
-        
-        try await audioPlayer.load(media: media)
-        
-        guard autoplay else { return }
-        
-        audioPlayer.play()
+    private func setupAudioPlayer() {
+        audioPlayer.hasPrevious = hasPrevious
+        audioPlayer.hasNext = hasNext
+        audioPlayer.previousHandler = previous
+        audioPlayer.nextHandler = next
     }
+    
+    private func prepare(media: T) async throws {
+//        guard media != audioPlayer.currentItem else { return }
+//        
+//        try await audioPlayer.load(media: media)
+//        
+//        guard autoplay else { return }
+//        
+//        audioPlayer.play()
+    }
+    
+    private func previous() {
+        guard let previousItem else { return }
+        selected = previousItem
+    }
+    
+    private func next() {
+        guard let nextItem else { return }
+        selected = nextItem
+    }
+    
 }
 
 #Preview {
     struct Example: View {
-        @State var items: [Item] = [
-            zeldaTOTKSample,
-            donkeyKongSample,
-            alanWakeSample
-        ]
+        @State var items = episodes
         
         var body: some View {
-            AudioPlayerView<Item>(
+            AudioPlayerView<Episode>(
                 items: items,
+                selected: items[0],
                 autoplay: false
             )
         }
     }
     
     return Example()
-        .environment(AudioPlayer<Item>())
 }

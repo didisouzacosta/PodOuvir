@@ -18,15 +18,15 @@ struct AudioListScreenView: View {
             List {
                 ForEach(store.sections) { section in
                     Section("\(section.year.description)") {
-                        ForEach(section.items) { item in
+                        ForEach(section.episodes) { episode in
                             NavigationLink {
-                                AudioPlayerView<Item>(
-                                    currentIndex: store.index(of: item),
-                                    items: store.items,
+                                AudioPlayerView<Episode>(
+                                    items: store.episodes,
+                                    selected: episode,
                                     autoplay: false
                                 )
                             } label: {
-                                Text(item.title ?? "---")
+                                Text(episode.title)
                             }
                         }
                     }
@@ -48,5 +48,4 @@ struct AudioListScreenView: View {
 #Preview {
     AudioListScreenView()
         .environment(PodcastStore())
-        .environment(AudioPlayer<Item>())
 }
