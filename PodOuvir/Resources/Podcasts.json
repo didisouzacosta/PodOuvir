@@ -3,6 +3,13 @@
         "year": 2024,
         "episodes": [
             {
+                "id": "613",
+                "title": "Sonic 2",
+                "artist": "99 Vidas",
+                "url": "https://anchor.fm/s/f0480b34/podcast/play/82784861/https%3A%2F%2Fd3ctxlq1ktw2nl.cloudfront.net%2Fstaging%2F2024-1-16%2Fb0f9c3d5-6384-b5e3-db88-bcccd9eb3f66.mp3",
+                "artworkURL": "https://sonicfangameshq.com/forums/showcase/sonic-2-hd-demo-2-0.47/cover-image"
+            },
+            {
                 "id": "612",
                 "title": "Donkey Kong Country",
                 "artist": "99 Vidas",

@@ -52,8 +52,8 @@ struct AudioPlayerView<T: Media>: View {
     var body: some View {
         let bindableCurrentItem = Binding {
             currentItem
-        } set: {
-            selection = $0
+        } set: { value in
+            selection = value
         }
         
         VStack(spacing: 16) {
@@ -121,17 +121,13 @@ struct AudioPlayerView<T: Media>: View {
     }
     
     private func previous() {
-        withAnimation {
-            guard let previousItem else { return }
-            selection = previousItem
-        }
+        guard let previousItem else { return }
+        selection = previousItem
     }
     
     private func next() {
-        withAnimation {
-            guard let nextItem else { return }
-            selection = nextItem
-        }
+        guard let nextItem else { return }
+        selection = nextItem
     }
     
 }
