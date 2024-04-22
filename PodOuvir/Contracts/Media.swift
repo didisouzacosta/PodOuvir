@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol Media: Equatable, Hashable {
+protocol Media: Equatable, Hashable, Identifiable {
     var id: String { get }
     var url: URL { get }
     var title: String { get }

@@ -10,11 +10,14 @@ import MediaPlayer
 import SwiftUI
 
 @Observable
-final class AudioPlayer<T: Media> {
+final class AudioPlayer {
     
+    typealias T = any Media
     typealias Handler = () -> Void
     
     // MARK: - Pubic Variables
+    
+    static var shared = AudioPlayer()
     
     var hasPrevious = false
     var hasNext = false
@@ -48,6 +51,8 @@ final class AudioPlayer<T: Media> {
     // MARK: - Public Methods
     
     func load(media: T) async throws {
+        guard media.id != currentItem?.id else { return } 
+        
         try await setupSession()
         
         stop()
@@ -62,6 +67,7 @@ final class AudioPlayer<T: Media> {
         
         totalTime = 0
         totalTime = try await playerItem.asset.load(.duration).seconds
+        currentItem = media
         
         setupInfoCenter(with: media)
     }

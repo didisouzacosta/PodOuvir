@@ -18,10 +18,10 @@ struct AudioPlayerView<T: Media>: View {
     
     // MARK: - Private Variables
     
+    private let audioPlayer = AudioPlayer.shared
+    
     @State private var currentTime: Double = 0
     @State private var isPlaying = false
-    
-    private let audioPlayer = AudioPlayer<T>()
     
     private var currentItem: T {
         selected ?? items[0]
@@ -113,7 +113,6 @@ struct AudioPlayerView<T: Media>: View {
     }
     
     private func prepare(media: T) async throws {
-        guard media != audioPlayer.currentItem else { return }
         try await audioPlayer.load(media: media)
     }
     
