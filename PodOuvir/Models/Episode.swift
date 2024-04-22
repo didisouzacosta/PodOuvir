@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct Episode: Decodable, Identifiable, Media {
+struct Episode: Decodable, Media {
     let id: String
     let title: String
     let artist: String?
     let url: URL
-    let artworkURL: URL?
+    let artworkURL: URL
 }
 
 struct EpisodesSection: Decodable, Identifiable {

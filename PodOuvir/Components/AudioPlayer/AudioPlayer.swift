@@ -106,14 +106,14 @@ final class AudioPlayer {
         currentTime = time.seconds
     }
     
-    func backward() {
+    func backward(time: Double = 10) {
         guard let currentTime = player?.currentItem?.currentTime().seconds else { return }
-        seek(to: max(0, currentTime - 10))
+        seek(to: max(0, currentTime - time))
     }
     
-    func forward() {
+    func forward(time: Double = 10) {
         guard let currentTime = player?.currentItem?.currentTime().seconds else { return }
-        seek(to: max(0, currentTime + 10))
+        seek(to: max(0, currentTime + time))
     }
     
     // MARK: - Private Methods
@@ -166,9 +166,7 @@ final class AudioPlayer {
         infos[MPMediaItemPropertyArtist] = media.artist
         infos[MPMediaItemPropertyPlaybackDuration] = totalTime
         
-        if let artworkUrl = media.artworkURL {
-            Task { try await loadArworkImage(from: artworkUrl) }
-        }
+        Task { try await loadArworkImage(from: media.artworkURL) }
         
         playingInfoCenter.nowPlayingInfo = infos
     }

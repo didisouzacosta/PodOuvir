@@ -11,8 +11,8 @@ protocol Media: Equatable, Hashable, Identifiable {
     var id: String { get }
     var url: URL { get }
     var title: String { get }
+    var artworkURL: URL { get }
     var artist: String? { get }
-    var artworkURL: URL? { get }
 }
 
 extension Media {

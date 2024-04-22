@@ -11,12 +11,12 @@
 		D52BDC872BD0FF66005C5599 /* AudioPlayerControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52BDC862BD0FF66005C5599 /* AudioPlayerControls.swift */; };
 		D52BDC892BD1072B005C5599 /* AudioPlayerTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52BDC882BD1072B005C5599 /* AudioPlayerTitle.swift */; };
 		D52BDC8B2BD1087F005C5599 /* AudioPlayerCover.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52BDC8A2BD1087F005C5599 /* AudioPlayerCover.swift */; };
-		D52BDC902BD11FB2005C5599 /* SnapPagerCarousel in Frameworks */ = {isa = PBXBuildFile; productRef = D52BDC8F2BD11FB2005C5599 /* SnapPagerCarousel */; };
 		D54AA71B2BD16F4A00435FC5 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54AA71A2BD16F4A00435FC5 /* Media.swift */; };
 		D56484742BD14D53007D0296 /* SafeArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56484732BD14D53007D0296 /* SafeArray.swift */; };
 		D56844802BCE7533005ED857 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = D568447F2BCE7533005ED857 /* Data.swift */; };
 		D589D8792BCD2D960072647A /* Podcasts.json in Resources */ = {isa = PBXBuildFile; fileRef = D589D8782BCD2D960072647A /* Podcasts.json */; };
 		D589D87C2BCD2E030072647A /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D589D87B2BCD2E030072647A /* Episode.swift */; };
+		D5A599D42BD6CC4C000C769F /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = D5A599D32BD6CC4C000C769F /* SDWebImageSwiftUI */; };
 		D5C4188B2BCB188700E68671 /* PodOuvirApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C4188A2BCB188700E68671 /* PodOuvirApp.swift */; };
 		D5C418912BCB188800E68671 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5C418902BCB188800E68671 /* Assets.xcassets */; };
 		D5C418942BCB188800E68671 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5C418932BCB188800E68671 /* Preview Assets.xcassets */; };
@@ -91,7 +91,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D52BDC902BD11FB2005C5599 /* SnapPagerCarousel in Frameworks */,
+				D5A599D42BD6CC4C000C769F /* SDWebImageSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,7 +304,7 @@
 			);
 			name = PodOuvir;
 			packageProductDependencies = (
-				D52BDC8F2BD11FB2005C5599 /* SnapPagerCarousel */,
+				D5A599D32BD6CC4C000C769F /* SDWebImageSwiftUI */,
 			);
 			productName = PodOuvir;
 			productReference = D5C418872BCB188700E68671 /* PodOuvir.app */;
@@ -379,7 +379,7 @@
 			);
 			mainGroup = D5C4187E2BCB188700E68671;
 			packageReferences = (
-				D52BDC8E2BD11FB2005C5599 /* XCRemoteSwiftPackageReference "SnapPagerCarousel" */,
+				D5A599D22BD6CC4C000C769F /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 			);
 			productRefGroup = D5C418882BCB188700E68671 /* Products */;
 			projectDirPath = "";
@@ -923,21 +923,21 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D52BDC8E2BD11FB2005C5599 /* XCRemoteSwiftPackageReference "SnapPagerCarousel" */ = {
+		D5A599D22BD6CC4C000C769F /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/MaximeFILIPPI/SnapPagerCarousel";
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D52BDC8F2BD11FB2005C5599 /* SnapPagerCarousel */ = {
+		D5A599D32BD6CC4C000C769F /* SDWebImageSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D52BDC8E2BD11FB2005C5599 /* XCRemoteSwiftPackageReference "SnapPagerCarousel" */;
-			productName = SnapPagerCarousel;
+			package = D5A599D22BD6CC4C000C769F /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

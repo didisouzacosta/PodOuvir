@@ -12,7 +12,7 @@ struct AudioPlayerView<T: Media>: View {
     // MARK: - Public Variables
     
     @State var items: [T]
-    @State var selected: T?
+    @State var selection: T?
     
     var autoplay: Bool
     
@@ -24,7 +24,7 @@ struct AudioPlayerView<T: Media>: View {
     @State private var isPlaying = false
     
     private var currentItem: T {
-        selected ?? items[0]
+        selection ?? items[0]
     }
     
     private var currentIndex: Int {
@@ -50,14 +50,19 @@ struct AudioPlayerView<T: Media>: View {
     // MARK: - Life Cicle
     
     var body: some View {
+        let bindableCurrentItem = Binding {
+            currentItem
+        } set: {
+            selection = $0
+        }
+        
         VStack(spacing: 16) {
             Spacer()
             
-//            AudioPlayerCover<T>(
-//                items: $items,
-//                selection: $selection,
-//                currentIndex: $currentIndex
-//            )
+            AudioPlayerCover<T>(
+                items: items,
+                selection: bindableCurrentItem
+            )
             
             VStack(spacing: 16) {
                 AudioPlayerTitle(
@@ -65,7 +70,6 @@ struct AudioPlayerView<T: Media>: View {
                     title: currentItem.title,
                     artist: currentItem.artist
                 )
-                .frame(height: 80)
                 
                 AudioPlayerSeekBar(
                     currentTime: $currentTime,
@@ -119,14 +123,14 @@ struct AudioPlayerView<T: Media>: View {
     private func previous() {
         withAnimation {
             guard let previousItem else { return }
-            selected = previousItem
+            selection = previousItem
         }
     }
     
     private func next() {
         withAnimation {
             guard let nextItem else { return }
-            selected = nextItem
+            selection = nextItem
         }
     }
     
@@ -139,7 +143,7 @@ struct AudioPlayerView<T: Media>: View {
         var body: some View {
             AudioPlayerView<Episode>(
                 items: items,
-                selected: items[0],
+                selection: items.first,
                 autoplay: false
             )
         }

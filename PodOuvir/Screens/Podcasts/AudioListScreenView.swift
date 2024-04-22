@@ -11,8 +11,6 @@ struct AudioListScreenView: View {
     
     @Environment(PodcastStore.self) private var store
     
-    @State private var currentIndex = 0
-    
     var body: some View {
         NavigationView {
             List {
@@ -22,7 +20,7 @@ struct AudioListScreenView: View {
                             NavigationLink {
                                 AudioPlayerView<Episode>(
                                     items: store.episodes,
-                                    selected: episode,
+                                    selection: episode,
                                     autoplay: true
                                 )
                             } label: {

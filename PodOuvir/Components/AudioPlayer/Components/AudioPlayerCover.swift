@@ -6,51 +6,45 @@
 //
 
 import SwiftUI
-import SnapPagerCarousel
+import SDWebImageSwiftUI
 
 struct AudioPlayerCover<T: Media>: View {
     
     // MARK: - Public Variables
     
-    @Binding var items: [T]
-    @Binding var selection: T?
-    @Binding var currentIndex: Int
+    @State var items: [T]
+    @Binding var selection: T
     
     var body: some View {
-        SnapPager(
-            items: $items,
-            selection: $selection,
-            currentIndex: $currentIndex,
-            edgesOverlap: 22,
-            itemsMargin: 8
-        ) { index, item in
-            Rectangle()
-                .overlay {
-                    AsyncImage(url: item.artworkURL) { image in
-                        image.resizable()
+        TabView(selection: $selection) {
+            ForEach(items, id: \.self) { item in
+                Rectangle()
+                    .overlay {
+                        WebImage(url: item.artworkURL)
+                            .resizable()
+                            .indicator(.activity)
+                            .transition(.fade(duration: 0.26))
                             .aspectRatio(contentMode: .fill)
-                    } placeholder: {
-                        ProgressView().progressViewStyle(.circular)
                     }
-                }
-                .foregroundStyle(.black)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
-                .clipped()
+                    .foregroundStyle(.black)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .clipped()
+            }
+            .padding(.horizontal)
         }
+        .tabViewStyle(.page(indexDisplayMode: .always))
     }
 }
 
 #Preview {
     struct Example:View {
-        @State private var currentIndex = 0
-        @State private var selectedItem: Episode?
-        @State private var artworks = episodes
+        @State private var items = episodes
+        @State private var selection = episodes[0]
         
         var body: some View {
             AudioPlayerCover<Episode>(
-                items: $artworks,
-                selection: $selectedItem,
-                currentIndex: $currentIndex
+                items: items,
+                selection: $selection
             )
         }
     }
