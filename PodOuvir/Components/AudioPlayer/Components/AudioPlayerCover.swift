@@ -10,7 +10,7 @@ import SDWebImageSwiftUI
 import Foundation
 
 protocol Cover: Hashable, Identifiable {
-    var midiaURL: URL { get }
+    var imageURL: URL { get }
 }
 
 struct AudioPlayerCover<T: Cover>: View {
@@ -25,7 +25,7 @@ struct AudioPlayerCover<T: Cover>: View {
             ForEach(0..<items.count, id: \.self) { index in
                 Rectangle()
                     .overlay {
-                        WebImage(url: items[index].midiaURL)
+                        WebImage(url: items[index].imageURL)
                             .resizable()
                             .indicator(.activity)
                             .transition(.fade(duration: 0.26))
@@ -37,7 +37,7 @@ struct AudioPlayerCover<T: Cover>: View {
             }
             .padding(.horizontal)
         }
-        .tabViewStyle(.page(indexDisplayMode: .always))
+        .tabViewStyle(.page(indexDisplayMode: .automatic))
         .indexViewStyle(.page(backgroundDisplayMode: .always))
     }
 }
@@ -48,7 +48,7 @@ struct AudioPlayerCover<T: Cover>: View {
         @State private var currentIndex = 0
         
         var body: some View {
-            AudioPlayerCover(
+            AudioPlayerCover<Episode>(
                 items: items,
                 currentIndex: $currentIndex
             )

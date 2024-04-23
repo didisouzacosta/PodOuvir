@@ -8,17 +8,17 @@
 import Foundation
 
 protocol Media: Cover, Equatable {
-    var id: String { get }
-    var url: URL { get }
     var title: String { get }
-    var artworkURL: URL { get }
-    var artist: String? { get }
+    var author: String { get }
+    var url: URL { get }
+    var image: URL { get }
     var duration: Double { get }
 }
 
 extension Media {
     
-    var episode: String { id }
-    var midiaURL: URL { artworkURL }
+    var imageURL: URL {
+        image
+    }
     
 }

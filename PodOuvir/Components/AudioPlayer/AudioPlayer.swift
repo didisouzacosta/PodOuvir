@@ -55,7 +55,7 @@ final class AudioPlayer {
     // MARK: - Public Methods
     
     func load(media: T) async throws {
-        guard media.id != currentItem?.id else { return }
+        guard media.url != currentItem?.url else { return }
         
         let playerItem = AVPlayerItem(url: media.url)
         
@@ -162,10 +162,10 @@ final class AudioPlayer {
     private func setupInfoCenter(with media: T) {
         var infos = [String: Any]()
         infos[MPMediaItemPropertyTitle] = media.title
-        infos[MPMediaItemPropertyArtist] = media.artist
+        infos[MPMediaItemPropertyArtist] = media.author
         infos[MPMediaItemPropertyPlaybackDuration] = media.duration
         
-        Task { try await loadArworkImage(from: media.artworkURL) }
+        Task { try await loadArworkImage(from: media.image) }
         
         playingInfoCenter.nowPlayingInfo = infos
     }

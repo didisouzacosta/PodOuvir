@@ -70,9 +70,8 @@ struct AudioPlayerView<T: Media>: View {
                 
                 VStack(spacing: 16) {
                     AudioPlayerTitle(
-                        episode: currentItem.episode,
                         title: currentItem.title,
-                        artist: currentItem.artist
+                        author: currentItem.author
                     )
                     
                     AudioPlayerSeekBar(

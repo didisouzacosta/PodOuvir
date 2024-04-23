@@ -8,17 +8,17 @@
 import Foundation
 
 struct Episode: Decodable, Media {
-    let id: String
     let title: String
-    let artist: String?
+    let author: String
     let url: URL
-    let artworkURL: URL
+    let image: URL
     let duration: Double
 }
 
-struct EpisodesSection: Decodable, Identifiable {
-    let year: Int
-    let episodes: [Episode]
+extension Episode {
     
-    var id: Int { year }
+    var id: String {
+        url.absoluteString
+    }
+    
 }

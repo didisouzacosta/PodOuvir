@@ -17,13 +17,9 @@ struct AudioListScreenView: View {
     var body: some View {
         NavigationStack(path: $path) {
             List {
-                ForEach(store.sections) { section in
-                    Section("\(section.year.description)") {
-                        ForEach(section.episodes) { episode in
-                            NavigationLink(value: episode) {
-                                Text(episode.title)
-                            }
-                        }
+                ForEach(store.episodes) { episode in
+                    NavigationLink(value: episode) {
+                        Text(episode.title)
                     }
                 }
             }

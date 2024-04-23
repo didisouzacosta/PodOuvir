@@ -8,20 +8,16 @@
 import SwiftUI
 
 struct AudioPlayerTitle: View {
-    let episode: String
     let title: String
-    let artist: String?
+    let author: String
     
     var body: some View {
         VStack {
-            Text(episode)
-                .font(.caption)
-                .lineLimit(1)
             Text(title)
                 .font(.title2)
                 .multilineTextAlignment(.center)
                 .lineLimit(1)
-            Text(artist ?? "...")
+            Text(author)
                 .font(.subheadline)
                 .lineLimit(1)
                 .foregroundStyle(.gray)
@@ -36,9 +32,8 @@ struct AudioPlayerTitle: View {
         
         var body: some View {
             AudioPlayerTitle(
-                episode: sample.id,
                 title: sample.title,
-                artist: sample.artist
+                author: sample.author
             )
         }
     }

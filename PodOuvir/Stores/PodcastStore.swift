@@ -12,17 +12,9 @@ class PodcastStore {
     
     // MARK: - Public Variables
     
-    var sections: [EpisodesSection] {
-        _sections.sorted(by: { $0.year > $1.year })
-    }
-    
-    var episodes: [Episode] {
-        sections.flatMap { $0.episodes }
-    }
+    private(set) var episodes: [Episode] = []
     
     // MARK: - Private Variables
-    
-    private var _sections: [EpisodesSection] = []
     
     // MARK: - Public Methods
     
@@ -36,7 +28,7 @@ class PodcastStore {
         let data = try Data(contentsOf: url)
         let decoder = JSONDecoder()
         
-        self._sections = try decoder.decode([EpisodesSection].self, from: data)
+        episodes = try decoder.decode([Episode].self, from: data)
     }
     
 }
