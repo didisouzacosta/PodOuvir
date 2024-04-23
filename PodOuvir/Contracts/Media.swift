@@ -13,6 +13,7 @@ protocol Media: Cover, Equatable {
     var title: String { get }
     var artworkURL: URL { get }
     var artist: String? { get }
+    var duration: Double { get }
 }
 
 extension Media {

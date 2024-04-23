@@ -8,6 +8,7 @@
 import AVFoundation
 import MediaPlayer
 import SwiftUI
+import SDWebImageSwiftUI
 
 @Observable
 final class AudioPlayer {
@@ -19,16 +20,19 @@ final class AudioPlayer {
     
     static var shared = AudioPlayer()
     
-//    var hasPrevious = false
-//    var hasNext = false
+    var currentTime: Double = 0
     var previousHandler: Handler?
     var nextHandler: Handler?
     
     private(set) var currentItem: T?
-    private(set) var totalTime: Double = 0
+    private(set) var duration: Double = 0
     
-    var currentTime: Double = 0 {
-        didSet { updateInfosCenter() }
+    var hasPrevious = false {
+        didSet { updateControls() }
+    }
+    
+    var hasNext = false {
+        didSet { updateControls() }
     }
     
     private(set) var state: State = .stopped {
@@ -64,11 +68,10 @@ final class AudioPlayer {
             player = AVPlayer(playerItem: playerItem)
         }
         
-        setupInfoCenter(with: media)
-        
-        totalTime = 0
-        totalTime = try await playerItem.asset.load(.duration).seconds
         currentItem = media
+        duration = media.duration
+        
+        setupInfoCenter(with: media)
     }
     
     func playPause() {
@@ -154,14 +157,13 @@ final class AudioPlayer {
             self?.nextHandler?()
             return .success
         }
-
     }
     
     private func setupInfoCenter(with media: T) {
         var infos = [String: Any]()
         infos[MPMediaItemPropertyTitle] = media.title
         infos[MPMediaItemPropertyArtist] = media.artist
-        infos[MPMediaItemPropertyPlaybackDuration] = totalTime
+        infos[MPMediaItemPropertyPlaybackDuration] = media.duration
         
         Task { try await loadArworkImage(from: media.artworkURL) }
         
@@ -170,10 +172,15 @@ final class AudioPlayer {
     
     private func updateInfosCenter() {
         var infos = playingInfoCenter.nowPlayingInfo ?? [:]
-        infos[MPMediaItemPropertyPlaybackDuration] = totalTime
+        infos[MPMediaItemPropertyPlaybackDuration] = duration
         infos[MPNowPlayingInfoPropertyElapsedPlaybackTime] = currentTime
         
         playingInfoCenter.nowPlayingInfo = infos
+    }
+    
+    private func updateControls() {
+        remoteCommand.previousTrackCommand.isEnabled = hasPrevious
+        remoteCommand.nextTrackCommand.isEnabled = hasNext
     }
     
     private func addTimeObserver() {

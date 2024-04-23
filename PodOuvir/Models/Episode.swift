@@ -13,6 +13,7 @@ struct Episode: Decodable, Media {
     let artist: String?
     let url: URL
     let artworkURL: URL
+    let duration: Double
 }
 
 struct EpisodesSection: Decodable, Identifiable {

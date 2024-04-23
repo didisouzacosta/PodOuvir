@@ -10,20 +10,20 @@ import SwiftUI
 struct AudioPlayerSeekBar: View {
     @Binding var currentTime: Double
     
-    let totalTime: Double
+    let duration: Double
     let playHandler: (Double) -> Void
     let stopHandler: () -> Void
     
     var body: some View {
         VStack {
             HStack {
-                Text(currentTime.minuteSecond)
+                Text(currentTime.hourMinuteSecond)
                 Spacer()
-                Text(totalTime.minuteSecond)
+                Text(duration.hourMinuteSecond)
             }
             Slider(
                 value: $currentTime,
-                in: 0...totalTime
+                in: 0...duration
             ) { isEditing in
                 if isEditing {
                     stopHandler()
@@ -42,7 +42,7 @@ struct AudioPlayerSeekBar: View {
         var body: some View {
             AudioPlayerSeekBar(
                 currentTime: $currentTime,
-                totalTime: 100,
+                duration: 100,
                 playHandler: { time in },
                 stopHandler: {}
             )

@@ -77,7 +77,7 @@ struct AudioPlayerView<T: Media>: View {
                     
                     AudioPlayerSeekBar(
                         currentTime: $currentTime,
-                        totalTime: audioPlayer.totalTime
+                        duration: audioPlayer.duration
                     ) { time in
                         audioPlayer.seek(to: time)
                         audioPlayer.play()
@@ -107,6 +107,8 @@ struct AudioPlayerView<T: Media>: View {
                         guard autoplay else { return }
                         audioPlayer.play()
                     }
+                    
+                    updateAudioPlayerControls()
                 }
             }
             .onAppear {
@@ -120,6 +122,11 @@ struct AudioPlayerView<T: Media>: View {
     private func setupAudioPlayerHandlers() {
         audioPlayer.previousHandler = { previous() }
         audioPlayer.nextHandler = { next() }
+    }
+    
+    private func updateAudioPlayerControls() {
+        audioPlayer.hasPrevious = hasPrevious
+        audioPlayer.hasNext = hasNext
     }
     
     private func prepare(media: T) async throws {

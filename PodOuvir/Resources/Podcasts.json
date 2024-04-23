@@ -7,28 +7,32 @@
                 "title": "Sonic 2",
                 "artist": "99 Vidas",
                 "url": "https://anchor.fm/s/f0480b34/podcast/play/82784861/https%3A%2F%2Fd3ctxlq1ktw2nl.cloudfront.net%2Fstaging%2F2024-1-16%2Fb0f9c3d5-6384-b5e3-db88-bcccd9eb3f66.mp3",
-                "artworkURL": "https://sonicfangameshq.com/forums/showcase/sonic-2-hd-demo-2-0.47/cover-image"
+                "artworkURL": "https://sonicfangameshq.com/forums/showcase/sonic-2-hd-demo-2-0.47/cover-image",
+                "duration": 6443.8073469387755
             },
             {
                 "id": "612",
                 "title": "Donkey Kong Country",
                 "artist": "99 Vidas",
                 "url": "https://anchor.fm/s/f0480b34/podcast/play/85041259/https%3A%2F%2Fd3ctxlq1ktw2nl.cloudfront.net%2Fstaging%2F2024-3-6%2F5c229842-6ebf-ec2b-03a1-ba99e21cdfc8.mp3",
-                "artworkURL": "https://assets.gamearena.gg/wp-content/uploads/2023/03/30005240/image_2023-03-20_181631519.png"
+                "artworkURL": "https://assets.gamearena.gg/wp-content/uploads/2023/03/30005240/image_2023-03-20_181631519.png",
+                "duration": 5116.734693877551
             },
             {
                 "id": "601",
                 "title": "Zelda Tears Of The Kingdom",
                 "artist": "99 Vidas",
                 "url": "https://anchor.fm/s/f0480b34/podcast/play/81520551/https%3A%2F%2Fd3ctxlq1ktw2nl.cloudfront.net%2Fstaging%2F2024-0-20%2F5ba39702-969c-d08e-e2b1-6180461d4bd2.mp3",
-                "artworkURL": "https://images.nintendolife.com/880243a8baed2/switch-tloz-totk-artwork-01.large.jpg"
+                "artworkURL": "https://images.nintendolife.com/880243a8baed2/switch-tloz-totk-artwork-01.large.jpg",
+                "duration": 10925.296326530612
             },
             {
                 "id": "550",
                 "title": "550 – Elden Ring",
                 "artist": "99 Vidas",
                 "url": "https://anchor.fm/s/f0480b34/podcast/play/80988917/https%3A%2F%2Fd3ctxlq1ktw2nl.cloudfront.net%2Fstaging%2F2024-0-8%2F362675002-44100-2-3afff9d119bf1277.mp3",
-                "artworkURL": "https://assets.nuuvem.com/image/upload/v1/products/618418052f91a002e3f9cf6b/sharing_images/dl3d5ccidn9wlkemhfjr.jpg"
+                "artworkURL": "https://assets.nuuvem.com/image/upload/v1/products/618418052f91a002e3f9cf6b/sharing_images/dl3d5ccidn9wlkemhfjr.jpg",
+                "duration": 11187.356734693878
             }
         ]
     }
