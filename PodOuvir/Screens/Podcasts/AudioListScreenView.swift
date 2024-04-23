@@ -11,24 +11,28 @@ struct AudioListScreenView: View {
     
     @Environment(PodcastStore.self) private var store
     
+    @State private var currentIndex = 0
+    @State private var path: [Episode] = []
+    
     var body: some View {
-        NavigationView {
+        NavigationStack(path: $path) {
             List {
                 ForEach(store.sections) { section in
                     Section("\(section.year.description)") {
                         ForEach(section.episodes) { episode in
-                            NavigationLink {
-                                AudioPlayerView<Episode>(
-                                    items: store.episodes,
-                                    selection: episode,
-                                    autoplay: true
-                                )
-                            } label: {
+                            NavigationLink(value: episode) {
                                 Text(episode.title)
                             }
                         }
                     }
                 }
+            }
+            .navigationDestination(for: Episode.self) { episode in
+                AudioPlayerView(
+                    items: store.episodes,
+                    selection: episode,
+                    autoplay: true
+                )
             }
         }
         .onAppear {

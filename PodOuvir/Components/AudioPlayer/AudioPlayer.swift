@@ -19,8 +19,8 @@ final class AudioPlayer {
     
     static var shared = AudioPlayer()
     
-    var hasPrevious = false
-    var hasNext = false
+//    var hasPrevious = false
+//    var hasNext = false
     var previousHandler: Handler?
     var nextHandler: Handler?
     
@@ -51,25 +51,24 @@ final class AudioPlayer {
     // MARK: - Public Methods
     
     func load(media: T) async throws {
-        guard media.id != currentItem?.id else { return } 
-        
-        try await setupSession()
-        
-        stop()
+        guard media.id != currentItem?.id else { return }
         
         let playerItem = AVPlayerItem(url: media.url)
         
         if let player {
             player.replaceCurrentItem(with: playerItem)
         } else {
+            try await setupSession()
+            setupRemoteTransportControls()
+            
             player = AVPlayer(playerItem: playerItem)
         }
+        
+        setupInfoCenter(with: media)
         
         totalTime = 0
         totalTime = try await playerItem.asset.load(.duration).seconds
         currentItem = media
-        
-        setupInfoCenter(with: media)
     }
     
     func playPause() {
@@ -146,13 +145,11 @@ final class AudioPlayer {
             return .success
         }
         
-        remoteCommand.previousTrackCommand.isEnabled = hasPrevious
         remoteCommand.previousTrackCommand.addTarget { [weak self] _ in
             self?.previousHandler?()
             return .success
         }
         
-        remoteCommand.nextTrackCommand.isEnabled = hasNext
         remoteCommand.nextTrackCommand.addTarget { [weak self] _ in
             self?.nextHandler?()
             return .success

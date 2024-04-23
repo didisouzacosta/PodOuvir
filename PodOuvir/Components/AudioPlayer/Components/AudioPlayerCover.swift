@@ -2,25 +2,30 @@
 //  AudioPlayerCover.swift
 //  PodOuvir
 //
-//  Created by ProDoctor on 18/04/24.
+//  Created by Adriano Souza Costa on 18/04/24.
 //
 
 import SwiftUI
 import SDWebImageSwiftUI
+import Foundation
 
-struct AudioPlayerCover<T: Media>: View {
+protocol Cover: Hashable, Identifiable {
+    var midiaURL: URL { get }
+}
+
+struct AudioPlayerCover<T: Cover>: View {
     
     // MARK: - Public Variables
     
     @State var items: [T]
-    @Binding var selection: T
+    @Binding var currentIndex: Int
     
     var body: some View {
-        TabView(selection: $selection) {
-            ForEach(items, id: \.self) { item in
+        TabView(selection: $currentIndex) {
+            ForEach(0..<items.count, id: \.self) { index in
                 Rectangle()
                     .overlay {
-                        WebImage(url: item.artworkURL)
+                        WebImage(url: items[index].midiaURL)
                             .resizable()
                             .indicator(.activity)
                             .transition(.fade(duration: 0.26))
@@ -33,18 +38,19 @@ struct AudioPlayerCover<T: Media>: View {
             .padding(.horizontal)
         }
         .tabViewStyle(.page(indexDisplayMode: .always))
+        .indexViewStyle(.page(backgroundDisplayMode: .always))
     }
 }
 
 #Preview {
     struct Example:View {
         @State private var items = episodes
-        @State private var selection = episodes[0]
+        @State private var currentIndex = 0
         
         var body: some View {
-            AudioPlayerCover<Episode>(
+            AudioPlayerCover(
                 items: items,
-                selection: $selection
+                currentIndex: $currentIndex
             )
         }
     }

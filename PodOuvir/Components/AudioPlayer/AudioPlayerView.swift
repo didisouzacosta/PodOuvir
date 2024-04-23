@@ -23,12 +23,13 @@ struct AudioPlayerView<T: Media>: View {
     @State private var currentTime: Double = 0
     @State private var isPlaying = false
     
-    private var currentItem: T {
-        selection ?? items[0]
+    private var currentIndex: Int {
+        guard let selection else { return 0 }
+        return items.firstIndex(of: selection) ?? 0
     }
     
-    private var currentIndex: Int {
-        items.firstIndex(of: currentItem) ?? 0
+    private var currentItem: T {
+        items[currentIndex]
     }
     
     private var previousItem: T? {
@@ -50,70 +51,75 @@ struct AudioPlayerView<T: Media>: View {
     // MARK: - Life Cicle
     
     var body: some View {
-        let bindableCurrentItem = Binding {
-            currentItem
+        let bindingCurrentIndex = Binding {
+            currentIndex
         } set: { value in
-            selection = value
+            selection = items[safe: value]
         }
         
-        VStack(spacing: 16) {
-            Spacer()
-            
-            AudioPlayerCover<T>(
-                items: items,
-                selection: bindableCurrentItem
-            )
-            
+        if items.isEmpty {
+            EmptyView()
+        } else {
             VStack(spacing: 16) {
-                AudioPlayerTitle(
-                    episode: currentItem.episode,
-                    title: currentItem.title,
-                    artist: currentItem.artist
+                Spacer()
+                
+                AudioPlayerCover<T>(
+                    items: items,
+                    currentIndex: bindingCurrentIndex
                 )
                 
-                AudioPlayerSeekBar(
-                    currentTime: $currentTime,
-                    totalTime: audioPlayer.totalTime
-                ) { time in
-                    audioPlayer.seek(to: time)
-                    audioPlayer.play()
-                } stopHandler: {
-                    audioPlayer.stop()
-                }.onChange(of: audioPlayer.currentTime) { _, newValue in
-                    currentTime = newValue
+                VStack(spacing: 16) {
+                    AudioPlayerTitle(
+                        episode: currentItem.episode,
+                        title: currentItem.title,
+                        artist: currentItem.artist
+                    )
+                    
+                    AudioPlayerSeekBar(
+                        currentTime: $currentTime,
+                        totalTime: audioPlayer.totalTime
+                    ) { time in
+                        audioPlayer.seek(to: time)
+                        audioPlayer.play()
+                    } stopHandler: {
+                        audioPlayer.stop()
+                    }.onChange(of: audioPlayer.currentTime) { _, newValue in
+                        currentTime = newValue
+                    }
+                    
+                    AudioPlayerControls(
+                        isPlaying: isPlaying,
+                        hasPrevious: hasPrevious,
+                        hasNext: hasNext,
+                        playHandler: { audioPlayer.play() },
+                        pauseHandler: { audioPlayer.pause() },
+                        nextHandler: { next() },
+                        previousHandler: { previous() }
+                    )
                 }
-                
-                AudioPlayerControls(
-                    isPlaying: isPlaying,
-                    hasPrevious: hasPrevious,
-                    hasNext: hasNext,
-                    playHandler: audioPlayer.play,
-                    pauseHandler: audioPlayer.pause,
-                    nextHandler: next,
-                    previousHandler: previous
-                )
-            }
-            .padding(.horizontal, 32)
-            .onChange(of: audioPlayer.isPlaying, initial: true) { _, newValue in
-                isPlaying = newValue
-            }
-            .onChange(of: currentItem, initial: true) { _, newValue in
-                Task {
-                    try? await prepare(media: newValue)
-                    guard autoplay else { return }
-                    audioPlayer.play()
+                .padding(.horizontal, 32)
+                .onChange(of: audioPlayer.isPlaying, initial: true) { _, newValue in
+                    isPlaying = newValue
                 }
+                .onChange(of: currentItem, initial: true) { _, newValue in
+                    Task {
+                        try? await prepare(media: newValue)
+                        guard autoplay else { return }
+                        audioPlayer.play()
+                    }
+                }
+            }
+            .onAppear {
+                setupAudioPlayerHandlers()
             }
         }
     }
     
     // MARK: - Private Methods
     
-    private func setupAudioPlayer() async throws {
-        audioPlayer.hasPrevious = hasPrevious
-        audioPlayer.hasNext = hasNext
-        audioPlayer.previousHandler = previous
-        audioPlayer.nextHandler = next
+    private func setupAudioPlayerHandlers() {
+        audioPlayer.previousHandler = { previous() }
+        audioPlayer.nextHandler = { next() }
     }
     
     private func prepare(media: T) async throws {
@@ -135,11 +141,12 @@ struct AudioPlayerView<T: Media>: View {
 #Preview {
     struct Example: View {
         @State var items = episodes
+        @State var selection = episodes[1]
         
         var body: some View {
             AudioPlayerView<Episode>(
                 items: items,
-                selection: items.first,
+                selection: selection,
                 autoplay: false
             )
         }
