@@ -31,14 +31,12 @@ struct AudioPlayerCover<T: Cover>: View {
                             .transition(.fade(duration: 0.26))
                             .aspectRatio(contentMode: .fill)
                     }
-                    .foregroundStyle(.black)
                     .clipShape(RoundedRectangle(cornerRadius: 12))
-                    .clipped()
+                    .aspectRatio(4/4, contentMode: .fit)
             }
             .padding(.horizontal)
         }
         .tabViewStyle(.page(indexDisplayMode: .automatic))
-        .indexViewStyle(.page(backgroundDisplayMode: .always))
     }
 }
 

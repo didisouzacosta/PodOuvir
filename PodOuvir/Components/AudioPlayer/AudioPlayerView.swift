@@ -61,8 +61,6 @@ struct AudioPlayerView<T: Media>: View {
             EmptyView()
         } else {
             VStack(spacing: 16) {
-                Spacer()
-                
                 AudioPlayerCover<T>(
                     items: items,
                     currentIndex: bindingCurrentIndex
@@ -147,7 +145,7 @@ struct AudioPlayerView<T: Media>: View {
 #Preview {
     struct Example: View {
         @State var items = episodes
-        @State var selection = episodes[1]
+        @State var selection = episodes[0]
         
         var body: some View {
             AudioPlayerView<Episode>(
