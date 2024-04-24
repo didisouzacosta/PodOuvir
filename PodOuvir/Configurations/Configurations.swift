@@ -8,13 +8,13 @@
 import Foundation
 
 struct Configurations {
-    static var backendURL = Bundle.main.backendURL
+    static var apiURL = Bundle.main.apiURL
 }
 
 fileprivate extension Bundle {
     
-    var backendURL: URL {
-        let url = infoDictionary!["BACKEND_URL"] as! String
+    var apiURL: URL {
+        let url = infoDictionary!["API_URL"] as! String
         return URL(string: url)!
     }
     

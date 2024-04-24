@@ -9,5 +9,3 @@
 // https://help.apple.com/xcode/#/dev745c5c974
 
 #include "Release.xcconfig"
-
-BACKEND_URL = https:/$()/stg.podouvir.com.br/api

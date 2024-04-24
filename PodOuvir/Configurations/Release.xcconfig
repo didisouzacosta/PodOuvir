@@ -8,4 +8,4 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-BACKEND_URL = https:/$()/podouvir.com.br/api
+API_URL = https:/$()/raw.githubusercontent.com/didisouzacosta/PodOuvir/main/PodOuvir/Resources/Podcasts.json

@@ -45,5 +45,5 @@ struct AudioListScreenView: View {
 
 #Preview {
     AudioListScreenView()
-        .environment(PodcastStore())
+        .environment(PodcastStoreFake())
 }
