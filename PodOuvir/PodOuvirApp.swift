@@ -11,7 +11,7 @@ import SwiftUI
 struct PodOuvirApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
-    private let podcastStore = PodcastStore()
+    private let podcastStore = PodcastStore<Episode>()
     
     var body: some Scene {
         WindowGroup {

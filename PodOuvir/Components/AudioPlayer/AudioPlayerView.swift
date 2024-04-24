@@ -61,7 +61,7 @@ struct AudioPlayerView<T: Media>: View {
             EmptyView()
         } else {
             VStack(spacing: 16) {
-                AudioPlayerCover<T>(
+                AudioPlayerCover(
                     items: items,
                     currentIndex: bindingCurrentIndex
                 )

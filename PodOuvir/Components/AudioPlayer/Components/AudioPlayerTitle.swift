@@ -22,7 +22,6 @@ struct AudioPlayerTitle: View {
                 .lineLimit(1)
                 .foregroundStyle(.gray)
         }
-        .contentTransition(.numericText())
     }
 }
 

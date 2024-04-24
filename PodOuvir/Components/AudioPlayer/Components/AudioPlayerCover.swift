@@ -23,16 +23,11 @@ struct AudioPlayerCover<T: Cover>: View {
     var body: some View {
         TabView(selection: $currentIndex) {
             ForEach(0..<items.count, id: \.self) { index in
-                Rectangle()
-                    .overlay {
-                        WebImage(url: items[index].imageURL)
-                            .resizable()
-                            .indicator(.activity)
-                            .transition(.fade(duration: 0.26))
-                            .aspectRatio(contentMode: .fill)
-                    }
+                WebImage(url: items[index].imageURL)
+                    .resizable()
+                    .indicator(.activity)
+                    .aspectRatio(contentMode: .fit)
                     .clipShape(RoundedRectangle(cornerRadius: 12))
-                    .aspectRatio(4/4, contentMode: .fit)
             }
             .padding(.horizontal)
         }
