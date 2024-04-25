@@ -20,12 +20,13 @@ final class AudioPlayer {
     
     static var shared = AudioPlayer()
     
-    var currentTime: Double = 0
     var previousHandler: Handler?
     var nextHandler: Handler?
     
-    private(set) var currentItem: T?
+    private(set) var currentTime: Double = 0
     private(set) var duration: Double = 0
+    private(set) var currentItem: T?
+    private(set) var isLoading = false
     
     var hasPrevious = false {
         didSet { updateControls() }
@@ -45,32 +46,44 @@ final class AudioPlayer {
     
     // MARK: - Private Variables
     
+    private let player = AVPlayer()
     private let remoteCommand = MPRemoteCommandCenter.shared()
     private let playingInfoCenter = MPNowPlayingInfoCenter.default()
     private let audioSession = AVAudioSession.sharedInstance()
     
+    private var autoplay = false
+    private var debounce: Debounce<T>?
     private var timeObserverToken: Any?
-    private var player: AVPlayer?
+    
+    // MARK: - Life Cicle
+    
+    init() {
+        defer {
+            debounce = Debounce<T>(duration: .seconds(0.2)) { [weak self] media in
+                try? await self?.setupPlayer(media)
+            }
+        }
+        
+        do {
+            try setupSession()
+        } catch {
+            print("Error on create session: \(error)")
+        }
+    
+        setupRemoteTransportControls()
+    }
     
     // MARK: - Public Methods
     
-    func load(media: T) async throws {
+    func load(_ media: T, autoplay: Bool) async throws {
         guard media.url != currentItem?.url else { return }
         
-        let playerItem = AVPlayerItem(url: media.url)
+        stop()
         
-        if let player {
-            player.replaceCurrentItem(with: playerItem)
-        } else {
-            try await setupSession()
-            setupRemoteTransportControls()
-            
-            player = AVPlayer(playerItem: playerItem)
-        }
+        self.autoplay = autoplay
+        isLoading = true
         
-        currentItem = media
-        duration = media.duration
-        
+        debounce?.emit(value: media)
         setupInfoCenter(with: media)
     }
     
@@ -80,21 +93,26 @@ final class AudioPlayer {
     
     func play() {
         state = .loading
-        player?.play()
+        player.play()
         
         addTimeObserver()
     }
     
     func pause() {
-        player?.pause()
+        player.pause()
         state = .paused
     }
     
     func stop() {
-        player?.pause()
-        player?.seek(to: .zero)
         currentTime = 0
+        duration = 0
         state = .stopped
+        isLoading = false
+        
+        player.pause()
+        player.seek(to: .zero)
+        
+        debounce?.cancel()
         
         removeTimeObserver()
     }
@@ -104,25 +122,40 @@ final class AudioPlayer {
     }
     
     func seek(to time: CMTime) {
-        player?.seek(to: time)
+        player.seek(to: time)
         currentTime = time.seconds
     }
     
     func backward(time: Double = 10) {
-        guard let currentTime = player?.currentItem?.currentTime().seconds else { return }
+        guard let currentTime = player.currentItem?.currentTime().seconds else { return }
         seek(to: max(0, currentTime - time))
     }
     
     func forward(time: Double = 10) {
-        guard let currentTime = player?.currentItem?.currentTime().seconds else { return }
+        guard let currentTime = player.currentItem?.currentTime().seconds else { return }
         seek(to: max(0, currentTime + time))
     }
     
     // MARK: - Private Methods
     
-    private func setupSession() async throws {
+    private func setupSession() throws {
         try audioSession.setCategory(.playback)
         try audioSession.setActive(true)
+    }
+    
+    private func setupPlayer(_ media: T) async throws {
+        do {
+            let playerItem = AVPlayerItem(url: media.url)
+            player.replaceCurrentItem(with: playerItem)
+            duration = try await playerItem.asset.load(.duration).seconds
+            if autoplay { play() }
+        } catch {
+            print(error)
+        }
+        
+        updateInfosCenter()
+        
+        isLoading = false
     }
     
     private func setupRemoteTransportControls() {
@@ -163,9 +196,8 @@ final class AudioPlayer {
         var infos = [String: Any]()
         infos[MPMediaItemPropertyTitle] = media.title
         infos[MPMediaItemPropertyArtist] = media.author
-        infos[MPMediaItemPropertyPlaybackDuration] = media.duration
         
-        Task { try await loadArworkImage(from: media.image) }
+//        Task { try await loadArworkImage(from: media.image) }
         
         playingInfoCenter.nowPlayingInfo = infos
     }
@@ -184,13 +216,15 @@ final class AudioPlayer {
     }
     
     private func addTimeObserver() {
+        guard timeObserverToken == nil else { return }
+        
         let interval = CMTimeMakeWithSeconds(0.5, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
         
-        timeObserverToken = player?.addPeriodicTimeObserver(
+        timeObserverToken = player.addPeriodicTimeObserver(
             forInterval: interval,
             queue: .main
         ) { [weak self] time in
-            if self?.state == .loading && self?.player?.status == .readyToPlay {
+            if self?.state == .loading && self?.player.status == .readyToPlay {
                 self?.state = .playing
             }
             
@@ -200,7 +234,7 @@ final class AudioPlayer {
     
     private func removeTimeObserver() {
         guard let token = timeObserverToken else { return }
-        player?.removeTimeObserver(token)
+        player.removeTimeObserver(token)
         timeObserverToken = nil
     }
     

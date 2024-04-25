@@ -9,10 +9,14 @@ import SwiftUI
 
 struct AudioListScreenView: View {
     
-    @Environment(PodcastStore<Episode>.self) private var store
+    typealias T = Episode
+    
+    @Environment(PodcastStore<T>.self) private var store
     
     @State private var currentIndex = 0
-    @State private var path: [Episode] = []
+    @State private var path: [T] = []
+    
+    private var autoplay = true
     
     var body: some View {
         Group {
@@ -27,11 +31,11 @@ struct AudioListScreenView: View {
                             }
                         }
                     }
-                    .navigationDestination(for: Episode.self) { episode in
+                    .navigationDestination(for: T.self) { episode in
                         AudioPlayerView(
                             items: store.episodes,
                             selection: episode,
-                            autoplay: true
+                            autoplay: autoplay
                         )
                     }
                 }

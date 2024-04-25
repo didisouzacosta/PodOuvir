@@ -12,24 +12,21 @@ struct AudioPlayerSeekBar: View {
     
     let duration: Double
     let playHandler: (Double) -> Void
-    let stopHandler: () -> Void
+    let pauseHandler: () -> Void
     
     var body: some View {
         VStack {
             HStack {
                 Text(currentTime.hourMinuteSecond)
                 Spacer()
-                Text(duration.hourMinuteSecond)
+                Text(duration.isZero ? "--:--" : duration.hourMinuteSecond)
             }
+            
             Slider(
                 value: $currentTime,
                 in: 0...duration
             ) { isEditing in
-                if isEditing {
-                    stopHandler()
-                } else {
-                    playHandler(currentTime)
-                }
+                isEditing ? pauseHandler() : playHandler(currentTime)
             }
         }
     }
@@ -44,7 +41,7 @@ struct AudioPlayerSeekBar: View {
                 currentTime: $currentTime,
                 duration: 100,
                 playHandler: { time in },
-                stopHandler: {}
+                pauseHandler: {}
             )
         }
     }

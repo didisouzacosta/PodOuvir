@@ -31,7 +31,8 @@ struct AudioPlayerCover<T: Cover>: View {
             }
             .padding(.horizontal)
         }
-        .tabViewStyle(.page(indexDisplayMode: .automatic))
+//        .tabViewStyle(.page(indexDisplayMode: .always))
+        .tabViewStyle(.page)
     }
 }
 

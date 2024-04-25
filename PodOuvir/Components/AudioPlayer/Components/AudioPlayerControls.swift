@@ -12,6 +12,7 @@ struct AudioPlayerControls: View {
     typealias Handler = () -> Void
     
     var isPlaying = false
+    var isLoading = false
     var hasPrevious = false
     var hasNext = false
     
