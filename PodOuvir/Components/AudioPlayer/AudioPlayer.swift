@@ -10,6 +10,7 @@ import MediaPlayer
 import SwiftUI
 import SDWebImageSwiftUI
 
+@MainActor
 @Observable
 final class AudioPlayer {
     

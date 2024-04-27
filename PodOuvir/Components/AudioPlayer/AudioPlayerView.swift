@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@MainActor
 struct AudioPlayerView<T: Media>: View {
     
     // MARK: - Public Variables
@@ -80,7 +81,7 @@ struct AudioPlayerView<T: Media>: View {
                     } pauseHandler: {
                         audioPlayer.pause()
                     }
-                    .disabled(audioPlayer.isLoading)
+//                    .disabled(audioPlayer.isLoading)
                     .onChange(of: audioPlayer.currentTime, initial: true) { _, newValue in
                         currentTime = newValue
                     }
