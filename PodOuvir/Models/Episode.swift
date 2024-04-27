@@ -11,8 +11,7 @@ struct Episode: Decodable, Media {
     let title: String
     let author: String
     let url: URL
-    let image: URL
-    let duration: Double
+    let imageURL: URL
 }
 
 extension Episode {

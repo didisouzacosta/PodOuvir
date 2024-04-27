@@ -58,6 +58,10 @@ final class AudioPlayer {
     private var debounce: Debounce<T>?
     private var timeObserverToken: Any?
     
+    private var loadCoverTask: Task<(), any Error>? {
+        didSet { oldValue?.cancel() }
+    }
+    
     // MARK: - Life Cicle
     
     init() {
@@ -204,7 +208,7 @@ final class AudioPlayer {
         infos[MPMediaItemPropertyTitle] = media.title
         infos[MPMediaItemPropertyArtist] = media.author
         
-        Task { try await loadArworkImage(from: media.image) }
+        loadCoverTask = Task { try await loadArworkImage(from: media.imageURL) }
         
         playingInfoCenter.nowPlayingInfo = infos
     }

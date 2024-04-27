@@ -11,14 +11,5 @@ protocol Media: Cover, Equatable {
     var title: String { get }
     var author: String { get }
     var url: URL { get }
-    var image: URL { get }
-    var duration: Double { get }
-}
-
-extension Media {
-    
-    var imageURL: URL {
-        image
-    }
-    
+    var imageURL: URL { get }
 }

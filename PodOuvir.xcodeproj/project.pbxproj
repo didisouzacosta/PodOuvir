@@ -14,6 +14,7 @@
 		D54AA71B2BD16F4A00435FC5 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54AA71A2BD16F4A00435FC5 /* Media.swift */; };
 		D56484742BD14D53007D0296 /* SafeArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56484732BD14D53007D0296 /* SafeArray.swift */; };
 		D56844802BCE7533005ED857 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = D568447F2BCE7533005ED857 /* Data.swift */; };
+		D581A8442BDD132200BC7E75 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581A8432BDD132200BC7E75 /* ImageView.swift */; };
 		D589D8792BCD2D960072647A /* Podcasts.json in Resources */ = {isa = PBXBuildFile; fileRef = D589D8782BCD2D960072647A /* Podcasts.json */; };
 		D589D87C2BCD2E030072647A /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D589D87B2BCD2E030072647A /* Episode.swift */; };
 		D5A599D42BD6CC4C000C769F /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = D5A599D32BD6CC4C000C769F /* SDWebImageSwiftUI */; };
@@ -59,6 +60,7 @@
 		D54AA71A2BD16F4A00435FC5 /* Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
 		D56484732BD14D53007D0296 /* SafeArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeArray.swift; sourceTree = "<group>"; };
 		D568447F2BCE7533005ED857 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		D581A8432BDD132200BC7E75 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
 		D589D8782BCD2D960072647A /* Podcasts.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Podcasts.json; sourceTree = "<group>"; };
 		D589D87B2BCD2E030072647A /* Episode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
 		D58FE7E02BD2975B00F2EE83 /* PodOuvirStaging.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PodOuvirStaging.entitlements; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 			isa = PBXGroup;
 			children = (
 				D5C418BD2BCB1C5C00E68671 /* AudioPlayer */,
+				D581A8432BDD132200BC7E75 /* ImageView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -442,6 +445,7 @@
 				D52BDC892BD1072B005C5599 /* AudioPlayerTitle.swift in Sources */,
 				D5C418C02BCB1CE600E68671 /* PodcastStore.swift in Sources */,
 				D5C418C62BCBDDF000E68671 /* TimeIntervalExtension.swift in Sources */,
+				D581A8442BDD132200BC7E75 /* ImageView.swift in Sources */,
 				D5C418D92BCD23CA00E68671 /* AppDelegate.swift in Sources */,
 				D5C418B82BCB1A1800E68671 /* AudioListScreenView.swift in Sources */,
 				D56484742BD14D53007D0296 /* SafeArray.swift in Sources */,
