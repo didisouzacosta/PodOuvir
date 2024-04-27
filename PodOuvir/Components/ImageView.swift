@@ -16,28 +16,13 @@ struct ImageView: View {
     
     // MARK: - Private Variables
     
-    @ObservedObject private var imageManager = ImageManager()
-    
     // MARK: - Life Cicle
     
     var body: some View {
-        Group {
-            if let image = imageManager.image {
-                Image(uiImage: image)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            } else {
-                Rectangle()
-                    .fill(.gray)
-                    .overlay {
-                        ProgressView()
-                    }
-            }
-        }
-        .onAppear {
-            imageManager.load(url: url)
-        }
-        .onDisappear { imageManager.cancel() }
+        WebImage(url: url)
+            .resizable()
+            .indicator(.activity(style: .circular))
+            .aspectRatio(contentMode: .fill)
     }
 }
 
