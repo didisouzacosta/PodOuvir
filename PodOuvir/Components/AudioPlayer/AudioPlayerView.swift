@@ -81,19 +81,19 @@ struct AudioPlayerView<T: Media>: View {
                         audioPlayer.pause()
                     }
                     .disabled(audioPlayer.isLoading)
-                    .onChange(of: audioPlayer.currentTime) { _, newValue in
+                    .onChange(of: audioPlayer.currentTime, initial: true) { _, newValue in
                         currentTime = newValue
                     }
                     
                     AudioPlayerControls(
                         isPlaying: audioPlayer.isPlaying,
                         isLoading: audioPlayer.isLoading,
-                        hasPrevious: hasPrevious,
-                        hasNext: hasNext,
                         playHandler: audioPlayer.play,
                         pauseHandler: audioPlayer.pause,
                         nextHandler: next,
-                        previousHandler: previous
+                        previousHandler: previous,
+                        hasPrevious: hasPrevious,
+                        hasNext: hasNext
                     )
                 }
                 .padding(.horizontal, 32)

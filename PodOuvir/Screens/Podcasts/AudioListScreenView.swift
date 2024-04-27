@@ -16,7 +16,7 @@ struct AudioListScreenView: View {
     @State private var currentIndex = 0
     @State private var path: [T] = []
     
-    private var autoplay = true
+    private var autoplay = false
     
     var body: some View {
         Group {

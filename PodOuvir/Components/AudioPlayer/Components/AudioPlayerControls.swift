@@ -11,15 +11,15 @@ struct AudioPlayerControls: View {
     
     typealias Handler = () -> Void
     
-    var isPlaying = false
-    var isLoading = false
-    var hasPrevious = false
-    var hasNext = false
-    
+    let isPlaying: Bool
+    let isLoading: Bool
     let playHandler: Handler
     let pauseHandler: Handler
     let nextHandler: Handler?
     let previousHandler: Handler?
+    
+    var hasPrevious = false
+    var hasNext = false
     
     var body: some View {
         HStack(spacing: 16) {
@@ -28,20 +28,34 @@ struct AudioPlayerControls: View {
             } label: {
                 Image(systemName: "backward.fill")
                     .font(.system(size: 30))
+                    .foregroundStyle(.controls)
             }.disabled(!hasPrevious)
             
             Button {
                 isPlaying ? pauseHandler() : playHandler()
             } label: {
-                Image(systemName: isPlaying ? "pause.circle.fill" : "play.circle.fill")
-                    .font(.system(size: 62))
+                Circle()
+                    .overlay {
+                        if isLoading {
+                            ProgressView()
+                        } else {
+                            Image(systemName: isPlaying ? "pause.fill" : "play.fill")
+                                .font(.system(size: 32))
+                                .foregroundStyle(.controls)
+                        }
+                    }
+                    .foregroundStyle(.fill)
+                    .frame(width: 62)
+                    .clipped()
             }
+            .disabled(isLoading)
             
             Button {
                 nextHandler?()
             } label: {
                 Image(systemName: "forward.fill")
                     .font(.system(size: 30))
+                    .foregroundStyle(.controls)
             }.disabled(!hasNext)
         }
         .padding()
@@ -50,19 +64,21 @@ struct AudioPlayerControls: View {
 
 #Preview {
     struct Example: View {
-        @State var isPlaying = false
+        @State var isPlaying = true
+        @State var isLoading = false
         @State var hasPrevious = false
         @State var hasNext = true
         
         var body: some View {
             AudioPlayerControls(
                 isPlaying: isPlaying,
-                hasPrevious: hasPrevious,
-                hasNext: hasNext,
+                isLoading: isLoading,
                 playHandler: {},
                 pauseHandler: {},
                 nextHandler: {},
-                previousHandler: {}
+                previousHandler: {},
+                hasPrevious: hasPrevious,
+                hasNext: hasNext
             )
         }
     }

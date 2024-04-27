@@ -178,7 +178,6 @@
 				D5C418BC2BCB1C5500E68671 /* Components */,
 				D5C418B62BCB19F300E68671 /* Screens */,
 				D5C4188A2BCB188700E68671 /* PodOuvirApp.swift */,
-				D5C418902BCB188800E68671 /* Assets.xcassets */,
 				D5C418922BCB188800E68671 /* Preview Content */,
 				D5C418D82BCD23CA00E68671 /* AppDelegate.swift */,
 			);
@@ -283,6 +282,7 @@
 		D5C418D52BCD23B000E68671 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D5C418902BCB188800E68671 /* Assets.xcassets */,
 				D5ECE4922BD3129300EB6BC0 /* ProdCast.json */,
 				D589D8782BCD2D960072647A /* Podcasts.json */,
 				D568447F2BCE7533005ED857 /* Data.swift */,

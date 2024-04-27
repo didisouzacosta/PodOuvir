@@ -28,6 +28,7 @@ struct AudioPlayerSeekBar: View {
             ) { isEditing in
                 isEditing ? pauseHandler() : playHandler(currentTime)
             }
+            .tint(.controls)
         }
     }
 }

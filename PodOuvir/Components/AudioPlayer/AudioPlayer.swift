@@ -25,8 +25,11 @@ final class AudioPlayer {
     
     private(set) var currentTime: Double = 0
     private(set) var duration: Double = 0
-    private(set) var currentItem: T?
     private(set) var isLoading = false
+    
+    private(set) var currentItem: T? {
+        didSet {  }
+    }
     
     var hasPrevious = false {
         didSet { updateControls() }
@@ -77,6 +80,8 @@ final class AudioPlayer {
     
     func load(_ media: T, autoplay: Bool) async throws {
         guard media.url != currentItem?.url else { return }
+        
+        currentItem = media
         
         stop()
         
@@ -145,9 +150,11 @@ final class AudioPlayer {
     
     private func setupPlayer(_ media: T) async throws {
         do {
-            let playerItem = AVPlayerItem(url: media.url)
-            player.replaceCurrentItem(with: playerItem)
-            duration = try await playerItem.asset.load(.duration).seconds
+            player.currentItem?.asset.cancelLoading()
+            player.replaceCurrentItem(with: .init(url: media.url))
+            
+            duration = try await player.currentItem?.asset.load(.duration).seconds ?? 0
+            
             if autoplay { play() }
         } catch {
             print(error)
@@ -197,7 +204,7 @@ final class AudioPlayer {
         infos[MPMediaItemPropertyTitle] = media.title
         infos[MPMediaItemPropertyArtist] = media.author
         
-//        Task { try await loadArworkImage(from: media.image) }
+        Task { try await loadArworkImage(from: media.image) }
         
         playingInfoCenter.nowPlayingInfo = infos
     }
