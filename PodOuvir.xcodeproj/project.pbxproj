@@ -31,7 +31,6 @@
 		D5C418C62BCBDDF000E68671 /* TimeIntervalExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C418C52BCBDDF000E68671 /* TimeIntervalExtension.swift */; };
 		D5C418D32BCD1E6300E68671 /* Configurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C418D22BCD1E6300E68671 /* Configurations.swift */; };
 		D5C418D92BCD23CA00E68671 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C418D82BCD23CA00E68671 /* AppDelegate.swift */; };
-		D5E4202B2BD97B0B00780CDC /* Debounce.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E4202A2BD97B0B00780CDC /* Debounce.swift */; };
 		D5ECE4932BD3129300EB6BC0 /* ProdCast.json in Resources */ = {isa = PBXBuildFile; fileRef = D5ECE4922BD3129300EB6BC0 /* ProdCast.json */; };
 /* End PBXBuildFile section */
 
@@ -85,7 +84,6 @@
 		D5C418D12BCD176600E68671 /* Staging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
 		D5C418D22BCD1E6300E68671 /* Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
 		D5C418D82BCD23CA00E68671 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D5E4202A2BD97B0B00780CDC /* Debounce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debounce.swift; sourceTree = "<group>"; };
 		D5E873592BCF56A800F4432D /* PodOuvir.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PodOuvir.entitlements; sourceTree = "<group>"; };
 		D5ECE4922BD3129300EB6BC0 /* ProdCast.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ProdCast.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -167,7 +165,6 @@
 		D5C418892BCB188700E68671 /* PodOuvir */ = {
 			isa = PBXGroup;
 			children = (
-				D5E420292BD97AFF00780CDC /* Helpers */,
 				D58FE7E02BD2975B00F2EE83 /* PodOuvirStaging.entitlements */,
 				D54AA7192BD16F3F00435FC5 /* Contracts */,
 				D5E873592BCF56A800F4432D /* PodOuvir.entitlements */,
@@ -293,14 +290,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		D5E420292BD97AFF00780CDC /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				D5E4202A2BD97B0B00780CDC /* Debounce.swift */,
-			);
-			path = Helpers;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -394,6 +383,7 @@
 			mainGroup = D5C4187E2BCB188700E68671;
 			packageReferences = (
 				D5A599D22BD6CC4C000C769F /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				D596ED952BE3CE6900699A37 /* XCRemoteSwiftPackageReference "Pages" */,
 			);
 			productRefGroup = D5C418882BCB188700E68671 /* Products */;
 			projectDirPath = "";
@@ -454,7 +444,6 @@
 				D5C418C22BCB1ED800E68671 /* AudioPlayer.swift in Sources */,
 				D52BDC842BD0FABB005C5599 /* AudioPlayerSeekBar.swift in Sources */,
 				D54AA71B2BD16F4A00435FC5 /* Media.swift in Sources */,
-				D5E4202B2BD97B0B00780CDC /* Debounce.swift in Sources */,
 				D52BDC872BD0FF66005C5599 /* AudioPlayerControls.swift in Sources */,
 				D5C4188B2BCB188700E68671 /* PodOuvirApp.swift in Sources */,
 			);
@@ -939,6 +928,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		D596ED952BE3CE6900699A37 /* XCRemoteSwiftPackageReference "Pages" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nachonavarro/Pages";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.5;
+			};
+		};
 		D5A599D22BD6CC4C000C769F /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";

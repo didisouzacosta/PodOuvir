@@ -6,8 +6,7 @@
 //
 
 import SwiftUI
-
-@MainActor
+//
 struct AudioPlayerView<T: Media>: View {
     
     // MARK: - Public Variables
@@ -51,20 +50,11 @@ struct AudioPlayerView<T: Media>: View {
     // MARK: - Life Cicle
     
     var body: some View {
-        let bindingCurrentIndex = Binding {
-            currentIndex
-        } set: { value in
-            selection = items[safe: value]
-        }
-        
         if items.isEmpty {
             EmptyView()
         } else {
             VStack(spacing: 16) {
-                AudioPlayerCover(
-                    items: items,
-                    currentIndex: bindingCurrentIndex
-                )
+                AudioPlayerCover(item: currentItem)
                 
                 VStack(spacing: 16) {
                     AudioPlayerTitle(
@@ -81,7 +71,7 @@ struct AudioPlayerView<T: Media>: View {
                     } pauseHandler: {
                         audioPlayer.pause()
                     }
-//                    .disabled(audioPlayer.isLoading)
+                    .disabled(audioPlayer.isLoading)
                     .onChange(of: audioPlayer.currentTime, initial: true) { _, newValue in
                         currentTime = newValue
                     }
@@ -96,15 +86,17 @@ struct AudioPlayerView<T: Media>: View {
                         hasPrevious: hasPrevious,
                         hasNext: hasNext
                     )
+                    .onChange(of: currentItem, initial: true) { _, newValue in
+                        Task {
+                            try await audioPlayer.load(
+                                newValue,
+                                autoplay: autoplay
+                            )
+                        }
+                        updateAudioPlayerControls()
+                    }
                 }
                 .padding(.horizontal, 32)
-                .onChange(of: currentItem, initial: true) { _, newValue in
-                    Task {
-                        try? await audioPlayer.load(newValue, autoplay: autoplay)
-                    }
-                    
-                    updateAudioPlayerControls()
-                }
             }
             .onAppear {
                 setupAudioPlayerHandlers()
@@ -125,12 +117,10 @@ struct AudioPlayerView<T: Media>: View {
     }
     
     private func previous() {
-        guard let previousItem else { return }
         selection = previousItem
     }
     
     private func next() {
-        guard let nextItem else { return }
         selection = nextItem
     }
     
@@ -139,12 +129,10 @@ struct AudioPlayerView<T: Media>: View {
 #Preview {
     struct Example: View {
         @State var items = episodes
-        @State var selection = episodes[0]
         
         var body: some View {
             AudioPlayerView<Episode>(
                 items: items,
-                selection: selection,
                 autoplay: false
             )
         }

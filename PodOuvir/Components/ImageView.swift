@@ -19,10 +19,12 @@ struct ImageView: View {
     // MARK: - Life Cicle
     
     var body: some View {
-        WebImage(url: url)
-            .resizable()
-            .indicator(.activity(style: .circular))
-            .aspectRatio(contentMode: .fill)
+        Rectangle().overlay {
+            WebImage(url: url)
+                .resizable()
+                .indicator(.activity(style: .circular))
+                .aspectRatio(contentMode: .fill)
+        }.clipped()
     }
 }
 

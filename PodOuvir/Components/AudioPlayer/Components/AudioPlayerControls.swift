@@ -28,8 +28,9 @@ struct AudioPlayerControls: View {
             } label: {
                 Image(systemName: "backward.fill")
                     .font(.system(size: 30))
-                    .foregroundStyle(.controls)
-            }.disabled(!hasPrevious)
+                    .foregroundColor(hasPrevious ? .controls : .accentColor)
+            }
+            .disabled(!hasPrevious)
             
             Button {
                 isPlaying ? pauseHandler() : playHandler()
@@ -55,8 +56,9 @@ struct AudioPlayerControls: View {
             } label: {
                 Image(systemName: "forward.fill")
                     .font(.system(size: 30))
-                    .foregroundStyle(.controls)
-            }.disabled(!hasNext)
+                    .foregroundColor(hasNext ? .controls : .accentColor)
+            }
+            .disabled(!hasNext)
         }
         .padding()
     }

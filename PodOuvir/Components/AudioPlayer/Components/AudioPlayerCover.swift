@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SDWebImageSwiftUI
 import Foundation
 
 protocol Cover: Hashable, Identifiable {
@@ -17,34 +16,17 @@ struct AudioPlayerCover<T: Cover>: View {
     
     // MARK: - Public Variables
     
-    @State var items: [T]
-    @Binding var currentIndex: Int
+    let item: T
     
     var body: some View {
-        TabView(selection: $currentIndex) {
-            ForEach(0..<items.count, id: \.self) { index in
-                ImageView(url: items[index].imageURL)
-                    .aspectRatio(1, contentMode: .fit)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-            }
-            .padding(.horizontal)
-        }
-        .tabViewStyle(.page(indexDisplayMode: .never))
+        ImageView(url: item.imageURL)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .aspectRatio(1, contentMode: .fit)
+            .padding()
+            .containerRelativeFrame(.horizontal)
     }
 }
 
 #Preview {
-    struct Example:View {
-        @State private var items = episodes
-        @State private var currentIndex = 0
-        
-        var body: some View {
-            AudioPlayerCover<Episode>(
-                items: items,
-                currentIndex: $currentIndex
-            )
-        }
-    }
-    
-    return Example()
+    return AudioPlayerCover(item: episodes[0])
 }
