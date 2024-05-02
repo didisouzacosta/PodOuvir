@@ -6,13 +6,15 @@
 //
 
 import SwiftUI
-//
+
 struct AudioPlayerView<T: Media>: View {
+    
+    @Environment(\.dismiss) private var dismiss
     
     // MARK: - Public Variables
     
     @State var items: [T]
-    @State var selection: T?
+    @Binding var selection: T?
     
     var autoplay: Bool
     
@@ -54,7 +56,17 @@ struct AudioPlayerView<T: Media>: View {
             EmptyView()
         } else {
             VStack(spacing: 16) {
+                Button {
+                    dismiss()
+                } label: {
+                    Text("Close")
+                }
+                
+                Spacer()
+                
                 AudioPlayerCover(item: currentItem)
+                
+                Spacer()
                 
                 VStack(spacing: 16) {
                     AudioPlayerTitle(
@@ -97,6 +109,8 @@ struct AudioPlayerView<T: Media>: View {
                     }
                 }
                 .padding(.horizontal, 32)
+                
+                Spacer()
             }
             .onAppear {
                 setupAudioPlayerHandlers()
@@ -128,11 +142,12 @@ struct AudioPlayerView<T: Media>: View {
 
 #Preview {
     struct Example: View {
-        @State var items = episodes
+        @State var selection: Episode?
         
         var body: some View {
-            AudioPlayerView<Episode>(
-                items: items,
+            AudioPlayerView(
+                items: episodes,
+                selection: $selection,
                 autoplay: false
             )
         }

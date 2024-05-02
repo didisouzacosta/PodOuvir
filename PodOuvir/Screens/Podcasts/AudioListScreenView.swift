@@ -13,8 +13,8 @@ struct AudioListScreenView: View {
     
     @Environment(PodcastStore<T>.self) private var store
     
-    @State private var currentIndex = 0
-    @State private var path: [T] = []
+    @State private var selection: T?
+    @State private var isPresent = false
     
     private var autoplay = false
     
@@ -23,23 +23,31 @@ struct AudioListScreenView: View {
             if store.isLoading {
                 ProgressView()
             } else {
-                NavigationStack(path: $path) {
-                    List {
-                        ForEach(store.episodes) { episode in
-                            NavigationLink(value: episode) {
-                                Text(episode.title)
-                            }
+                ScrollViewReader { proxy in
+                    List(
+                        store.episodes,
+                        id: \.self
+                    ) { episode in
+                        Button {
+                            selection = episode
+                            isPresent.toggle()
+                        } label: {
+                            Text(episode.title)
                         }
+                        .id(episode)
                     }
-                    .navigationDestination(for: T.self) { episode in
-                        AudioPlayerView(
-                            items: store.episodes,
-                            selection: episode,
-                            autoplay: autoplay
-                        )
+                    .onChange(of: selection) { oldValue, newValue in
+                        proxy.scrollTo(newValue)
                     }
                 }
             }
+        }
+        .fullScreenCover(isPresented: $isPresent) {
+            AudioPlayerView(
+                items: store.episodes,
+                selection: $selection,
+                autoplay: autoplay
+            )
         }
         .onAppear {
             Task {
