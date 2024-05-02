@@ -383,7 +383,6 @@
 			mainGroup = D5C4187E2BCB188700E68671;
 			packageReferences = (
 				D5A599D22BD6CC4C000C769F /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
-				D596ED952BE3CE6900699A37 /* XCRemoteSwiftPackageReference "Pages" */,
 			);
 			productRefGroup = D5C418882BCB188700E68671 /* Products */;
 			projectDirPath = "";
@@ -928,14 +927,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D596ED952BE3CE6900699A37 /* XCRemoteSwiftPackageReference "Pages" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/nachonavarro/Pages";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.5;
-			};
-		};
 		D5A599D22BD6CC4C000C769F /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";

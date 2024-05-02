@@ -83,9 +83,9 @@ final class AudioPlayer {
     // MARK: - Public Methods
     
     func load(_ media: T, autoplay: Bool) async throws {
-        isLoading = true
-        
         stop()
+        
+        isLoading = true
         
         loadMediaTask = Task { @MainActor in
             setupInfoCenter(with: media)

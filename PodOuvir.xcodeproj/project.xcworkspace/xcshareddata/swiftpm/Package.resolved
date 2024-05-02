@@ -1,15 +1,6 @@
 {
-  "originHash" : "04004c58e928f8c9e34fb1c4510366dbd6be1af1c9306f41409bf104ff832be5",
+  "originHash" : "4afe3317e0d15d2489436da7b7a4d73a0275f042e903c27b0a4897e00b1c9084",
   "pins" : [
-    {
-      "identity" : "pages",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/nachonavarro/Pages",
-      "state" : {
-        "revision" : "4cdbe4ff2f9ddbfda8cf0376a2acb678a1a0a0a2",
-        "version" : "0.1.5"
-      }
-    },
     {
       "identity" : "sdwebimage",
       "kind" : "remoteSourceControl",
