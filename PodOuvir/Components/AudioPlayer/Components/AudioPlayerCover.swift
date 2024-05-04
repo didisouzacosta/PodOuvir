@@ -17,13 +17,18 @@ struct AudioPlayerCover<T: Cover>: View {
     // MARK: - Public Variables
     
     let item: T
+    var loadedImageHandler: ((UIImage) -> Void)?
     
     var body: some View {
-        ImageView(url: item.imageURL)
+        Rectangle().fill(.background)
+            .overlay {
+                ImageView(
+                    url: item.imageURL,
+                    loadedImageHandler: loadedImageHandler
+                )
+            }
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .aspectRatio(1, contentMode: .fit)
-            .padding()
-            .containerRelativeFrame(.horizontal)
     }
 }
 

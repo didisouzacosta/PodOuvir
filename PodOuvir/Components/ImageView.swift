@@ -14,20 +14,20 @@ struct ImageView: View {
     
     let url: URL
     
-    // MARK: - Private Variables
+    var loadedImageHandler: ((UIImage) -> Void)?
     
     // MARK: - Life Cicle
     
     var body: some View {
-        Rectangle()
-            .fill(.clear)
-            .overlay {
-                WebImage(url: url)
-                    .resizable()
-                    .indicator(.activity(style: .circular))
-                    .aspectRatio(contentMode: .fill)
-            }
-            .clipped()
+        WebImage(url: url) { image in
+            image.resizable()
+        } placeholder: {
+            Rectangle().foregroundColor(.gray)
+        }
+        .onSuccess { image, data, cache in
+            loadedImageHandler?(image)
+        }
+        .indicator(.activity)
     }
 }
 

@@ -60,7 +60,6 @@ struct AudioPlayerControls: View {
             }
             .disabled(!hasNext)
         }
-        .padding()
     }
 }
 

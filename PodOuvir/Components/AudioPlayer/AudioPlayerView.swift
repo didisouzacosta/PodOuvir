@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@MainActor
 struct AudioPlayerView<T: Media>: View {
     
     @Environment(\.dismiss) private var dismiss
@@ -21,6 +22,7 @@ struct AudioPlayerView<T: Media>: View {
     // MARK: - Private Variables
     
     @State private var currentTime: Double = 0
+    @State private var image: UIImage?
     
     private let audioPlayer = AudioPlayer.shared
     
@@ -52,19 +54,32 @@ struct AudioPlayerView<T: Media>: View {
     // MARK: - Life Cicle
     
     var body: some View {
-        if items.isEmpty {
-            EmptyView()
-        } else {
+        ZStack {
+            if let image {
+                Image(uiImage: image)
+                    .resizable()
+                    .blur(radius: 100.0, opaque: true)
+                    .ignoresSafeArea()
+            }
+        
             VStack(spacing: 16) {
-                Button {
-                    dismiss()
-                } label: {
-                    Text("Close")
+                HStack {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Text("Close")
+                    }
+                    
+                    Spacer()
                 }
                 
                 Spacer()
                 
-                AudioPlayerCover(item: currentItem)
+                AudioPlayerCover(item: currentItem) { image in
+                    withAnimation {
+                        self.image = image
+                    }
+                }
                 
                 Spacer()
                 
@@ -98,6 +113,7 @@ struct AudioPlayerView<T: Media>: View {
                         hasPrevious: hasPrevious,
                         hasNext: hasNext
                     )
+                    .padding(.bottom, 16)
                     .onChange(of: currentItem, initial: true) { _, newValue in
                         Task {
                             try await audioPlayer.load(
@@ -108,13 +124,13 @@ struct AudioPlayerView<T: Media>: View {
                         updateAudioPlayerControls()
                     }
                 }
-                .padding(.horizontal, 32)
-                
-                Spacer()
+                .padding()
             }
-            .onAppear {
-                setupAudioPlayerHandlers()
-            }
+            .safeAreaPadding()
+        }
+        .background(.white)
+        .onAppear {
+            setupAudioPlayerHandlers()
         }
     }
     

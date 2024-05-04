@@ -19,10 +19,10 @@ struct AudioListScreenView: View {
     private var autoplay = false
     
     var body: some View {
-        Group {
+        ZStack {
             if store.isLoading {
                 ProgressView()
-            } else {
+            } else if !store.episodes.isEmpty {
                 ScrollViewReader { proxy in
                     List(
                         store.episodes,
@@ -30,7 +30,9 @@ struct AudioListScreenView: View {
                     ) { episode in
                         Button {
                             selection = episode
-                            isPresent.toggle()
+                            withAnimation {
+                                self.isPresent = true
+                            }
                         } label: {
                             Text(episode.title)
                         }
