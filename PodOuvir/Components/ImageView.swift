@@ -10,11 +10,13 @@ import SDWebImageSwiftUI
 
 struct ImageView: View {
     
+    typealias Handler = ((UIImage?) -> Void)
+    
     // MARK: - Public Variables
     
     let url: URL
     
-    var loadedImageHandler: ((UIImage) -> Void)?
+    var handler: Handler?
     
     // MARK: - Life Cicle
     
@@ -22,15 +24,22 @@ struct ImageView: View {
         WebImage(url: url) { image in
             image.resizable()
         } placeholder: {
-            Rectangle().foregroundColor(.gray)
+            ProgressView()
         }
-        .onSuccess { image, data, cache in
-            loadedImageHandler?(image)
+        .onSuccess { image, _, _ in
+            handler?(image)
         }
-        .indicator(.activity)
     }
 }
 
 #Preview {
-    ImageView(url: episodes[0].imageURL)
+    struct Example: View {
+        @State private var image: UIImage?
+        
+        var body: some View {
+            ImageView(url: episodes[0].imageURL)
+        }
+    }
+    
+    return Example()
 }

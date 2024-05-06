@@ -1,5 +1,5 @@
 //
-//  URL+Cover.swift
+//  URL+Cover+Extension.swift
 //  PodOuvir
 //
 //  Created by ProDoctor on 02/05/24.

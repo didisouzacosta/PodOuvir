@@ -1,5 +1,5 @@
 //
-//  TimeIntervalExtension.swift
+//  TimeInterval+Extension.swift
 //  PodOuvir
 //
 //  Created by Adriano Souza Costa on 14/04/24.

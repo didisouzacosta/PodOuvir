@@ -22,7 +22,11 @@ struct AudioPlayerView<T: Media>: View {
     // MARK: - Private Variables
     
     @State private var currentTime: Double = 0
-    @State private var image: UIImage?
+    @State private var coverImage: UIImage?
+    
+    @State private var task: Task<Void, Never>? {
+        didSet { oldValue?.cancel() }
+    }
     
     private let audioPlayer = AudioPlayer.shared
     
@@ -55,11 +59,12 @@ struct AudioPlayerView<T: Media>: View {
     
     var body: some View {
         ZStack {
-            if let image {
-                Image(uiImage: image)
+            if let coverImage {
+                Image(uiImage: coverImage)
                     .resizable()
-                    .blur(radius: 100.0, opaque: true)
+                    .blur(radius: 100, opaque: true)
                     .ignoresSafeArea()
+                    .animation(/*@START_MENU_TOKEN@*/.easeIn/*@END_MENU_TOKEN@*/, value: coverImage)
             }
         
             VStack(spacing: 16) {
@@ -76,10 +81,14 @@ struct AudioPlayerView<T: Media>: View {
                 Spacer()
                 
                 AudioPlayerCover(item: currentItem) { image in
-                    withAnimation {
-                        self.image = image
+                    task = Task {
+                        do {
+                            try await Task.sleep(for: .seconds(0.2))
+                            coverImage = image
+                        } catch {}
                     }
                 }
+                .padding()
                 
                 Spacer()
                 
