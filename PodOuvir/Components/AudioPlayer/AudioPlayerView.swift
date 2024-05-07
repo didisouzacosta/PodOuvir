@@ -59,13 +59,12 @@ struct AudioPlayerView<T: Media>: View {
     
     var body: some View {
         ZStack {
-            if let coverImage {
-                Image(uiImage: coverImage)
-                    .resizable()
-                    .blur(radius: 100, opaque: true)
-                    .ignoresSafeArea()
-                    .animation(/*@START_MENU_TOKEN@*/.easeIn/*@END_MENU_TOKEN@*/, value: coverImage)
-            }
+            Image(uiImage: coverImage ?? UIImage.background)
+                .resizable()
+                .interpolation(.none)
+                .blur(radius: 80, opaque: true)
+                .animation(.easeIn(duration: 1), value: coverImage)
+                .ignoresSafeArea()
         
             VStack(spacing: 16) {
                 HStack {
