@@ -63,7 +63,7 @@ struct AudioPlayerView<T: Media>: View {
                 .resizable()
                 .interpolation(.none)
                 .blur(radius: 80, opaque: true)
-                .animation(.easeIn(duration: 1), value: coverImage)
+//                .animation(.easeIn(duration: 1), value: coverImage)
                 .ignoresSafeArea()
         
             VStack(spacing: 16) {
@@ -82,8 +82,14 @@ struct AudioPlayerView<T: Media>: View {
                 AudioPlayerCover(item: currentItem) { image in
                     task = Task {
                         do {
-                            try await Task.sleep(for: .seconds(0.2))
-                            coverImage = image
+                            try await Task.sleep(for: .seconds(0.4))
+                            
+                            var transaction = Transaction(animation: .easeOut)
+                            transaction.disablesAnimations = true
+
+                            withTransaction(transaction) {
+                                coverImage = image
+                            }
                         } catch {}
                     }
                 }
