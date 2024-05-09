@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-@MainActor
 struct AudioPlayerView<T: Media>: View {
     
     @Environment(\.dismiss) private var dismiss
@@ -59,11 +58,15 @@ struct AudioPlayerView<T: Media>: View {
     
     var body: some View {
         ZStack {
-            Image(uiImage: coverImage ?? UIImage.background)
-                .resizable()
-                .interpolation(.none)
+            Rectangle()
+                .fill(.black)
+                .overlay {
+                    Image(uiImage: coverImage ?? UIImage.background)
+                        .resizable()
+                        .interpolation(.none)
+                        .animation(/*@START_MENU_TOKEN@*/.easeIn/*@END_MENU_TOKEN@*/, value: coverImage)
+                }
                 .blur(radius: 80, opaque: true)
-//                .animation(.easeIn(duration: 1), value: coverImage)
                 .ignoresSafeArea()
         
             VStack(spacing: 16) {
@@ -79,17 +82,11 @@ struct AudioPlayerView<T: Media>: View {
                 
                 Spacer()
                 
-                AudioPlayerCover(item: currentItem) { image in
-                    task = Task {
+                AudioPlayerCover(item: currentItem) { @MainActor image in
+                    task = Task { @MainActor in
                         do {
                             try await Task.sleep(for: .seconds(0.4))
-                            
-                            var transaction = Transaction(animation: .easeOut)
-                            transaction.disablesAnimations = true
-
-                            withTransaction(transaction) {
-                                coverImage = image
-                            }
+                            coverImage = image
                         } catch {}
                     }
                 }
@@ -128,7 +125,7 @@ struct AudioPlayerView<T: Media>: View {
                         hasNext: hasNext
                     )
                     .padding(.bottom, 16)
-                    .onChange(of: currentItem, initial: true) { _, newValue in
+                    .onChange(of: currentItem, initial: true) { @MainActor _, newValue in
                         Task {
                             try await audioPlayer.load(
                                 newValue,
