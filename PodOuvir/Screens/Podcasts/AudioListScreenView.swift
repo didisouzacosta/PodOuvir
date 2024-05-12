@@ -13,8 +13,11 @@ struct AudioListScreenView: View {
     
     @Environment(PodcastStore<T>.self) private var store
     
+    private let subscriptionManager = SubscriptionManager.shared
+    
     @State private var selection: T?
-    @State private var isPresent = false
+    @State private var isPresentPlayer = false
+    @State private var isPresentSubscription = false
     
     private var autoplay = false
     
@@ -24,27 +27,39 @@ struct AudioListScreenView: View {
                 ProgressView()
             } else if !store.episodes.isEmpty {
                 ScrollViewReader { proxy in
-                    List(
-                        store.episodes,
-                        id: \.self
-                    ) { episode in
-                        Button {
-                            selection = episode
-                            withAnimation {
-                                self.isPresent = true
+                    VStack {
+                        List(
+                            store.episodes,
+                            id: \.self
+                        ) { episode in
+                            Button {
+                                selection = episode
+                                isPresentPlayer.toggle()
+                            } label: {
+                                Text(episode.title)
                             }
-                        } label: {
-                            Text(episode.title)
+                            .id(episode)
                         }
-                        .id(episode)
-                    }
-                    .onChange(of: selection) { oldValue, newValue in
-                        proxy.scrollTo(newValue)
+                        .onChange(of: selection) { oldValue, newValue in
+                            proxy.scrollTo(newValue)
+                        }
+                        
+                        if !subscriptionManager.hasPremium {
+                            Button {
+                                isPresentSubscription.toggle()
+                            } label: {
+                                Text("Get a premium account")
+                            }
+                            .safeAreaPadding()
+                        }
                     }
                 }
             }
         }
-        .fullScreenCover(isPresented: $isPresent) {
+        .fullScreenCover(isPresented: $isPresentSubscription) {
+            SubscriptionScreenView()
+        }
+        .fullScreenCover(isPresented: $isPresentPlayer) {
             AudioPlayerView(
                 items: store.episodes,
                 selection: $selection,

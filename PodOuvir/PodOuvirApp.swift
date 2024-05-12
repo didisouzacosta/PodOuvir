@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct PodOuvirApp: App {
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @UIApplicationDelegateAdaptor(AppDelegate.self) private var delegate
     
     private let podcastStore = PodcastStore<Episode>()
     
@@ -18,5 +18,6 @@ struct PodOuvirApp: App {
             AudioListScreenView()
         }
         .environment(podcastStore)
+        
     }
 }

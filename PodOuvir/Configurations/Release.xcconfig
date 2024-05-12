@@ -9,3 +9,4 @@
 // https://help.apple.com/xcode/#/dev745c5c974
 
 API_URL = https:/$()/raw.githubusercontent.com/didisouzacosta/PodOuvir/main/PodOuvir/Resources/Podcasts.json
+SUBSCRIPTION_GROUP_ID = 21485751

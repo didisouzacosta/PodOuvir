@@ -4,6 +4,8 @@
 <dict>
 	<key>API_URL</key>
 	<string>$(API_URL)</string>
+	<key>SUBSCRIPTION_GROUP_ID</key>
+	<string>$(SUBSCRIPTION_GROUP_ID)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>UIBackgroundModes</key>
